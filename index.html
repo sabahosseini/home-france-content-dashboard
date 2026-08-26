@@ -44,7 +44,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .cal-scroll{overflow-x:auto}.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:800;padding:6px}
 .day{min-height:137px;background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:7px}.day.muted{opacity:.44}.date{font-size:10px;color:var(--muted);font-weight:750;margin-bottom:6px}
 .content-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px;margin-bottom:5px;box-shadow:0 1px 2px rgba(16,24,40,.025)}
-.ctitle{font-size:10px;line-height:1.3;font-weight:740;margin-bottom:5px}.tags{display:flex;flex-wrap:wrap;gap:3px}.tag{font-size:8px;padding:2px 5px;border-radius:999px;background:var(--soft);color:#55616e}
+.ctitle{font-size:10px;line-height:1.3;font-weight:740;margin-bottom:5px}.content-card details{margin:-7px}.content-card summary{list-style:none;cursor:pointer;padding:7px;border-radius:8px}.content-card summary::-webkit-details-marker{display:none}.content-card summary:after{content:"Open brief ↓";display:block;margin-top:6px;font-size:8px;font-weight:800;color:var(--blueText)}.content-card details[open] summary:after{content:"Close brief ↑"}.brief-detail{border-top:1px solid var(--line);padding:9px 8px 8px;background:#fbfcfe}.detail-row{margin-bottom:8px}.detail-row:last-child{margin-bottom:0}.detail-label{display:block;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.05em;color:#536477;margin-bottom:3px}.detail-text,.detail-list{font-size:9px;line-height:1.45;color:#3e4b5a}.detail-list{margin:3px 0 0;padding-left:15px}.detail-list li{margin-bottom:3px}.detail-source{color:var(--blueText);text-decoration:none;font-weight:750}.tags{display:flex;flex-wrap:wrap;gap:3px}.tag{font-size:8px;padding:2px 5px;border-radius:999px;background:var(--soft);color:#55616e}
 .tag.en{background:var(--blue);color:var(--blueText)}.tag.fa{background:var(--pink);color:var(--pinkText)}.tag.ready{background:var(--green);color:var(--greenText)}.tag.research{background:var(--orange);color:var(--orangeText)}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:14px}.topic{display:grid;grid-template-columns:24px 1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
 .topic:last-child{border-bottom:none}.num{width:22px;height:22px;border-radius:7px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
@@ -102,7 +102,22 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
       <div class="day"><div class="date">Sep 1</div><div class="content-card"><div class="ctitle">Will France Tax Your U.S. Retirement Income?</div><div class="tags"><span class="tag en">English</span><span class="tag ready">Script Ready</span></div></div></div>
       <div class="day"><div class="date">Sep 2</div></div>
       <div class="day"><div class="date">Sep 3</div><div class="content-card"><div class="ctitle">Can Foreign Buyers Get a Mortgage in France?</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span></div></div></div>
-      <div class="day"><div class="date">Sep 4</div><div class="content-card"><div class="ctitle">A Cheap French Home Can Cost You More</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span><span class="tag">Short</span></div></div></div>
+      <div class="day"><div class="date">Sep 4</div><div class="content-card">
+<details>
+  <summary><div class="ctitle">A Cheap French Home Can Cost You More</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span><span class="tag">Short</span></div></summary>
+  <div class="brief-detail">
+    <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Help international buyers understand that the right French region is determined by daily-life fit, not property price alone.</div></div>
+    <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">Foreign buyers, retirees and second-home buyers comparing French regions.</div></div>
+    <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“That affordable house in rural France may not be a bargain if the nearest doctor, airport or train station is hours away.”</div></div>
+    <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Healthcare and doctor availability</li><li>Airport and train access</li><li>Everyday shops and essential services</li><li>Climate and year-round lifestyle</li><li>Spend time in the area before buying</li></ul></div>
+    <div class="detail-row"><span class="detail-label">Top audience questions</span><ul class="detail-list"><li>Are rural areas medical deserts?</li><li>How close should I be to an airport or train?</li><li>Will a cheap region work for everyday life?</li><li>Should I rent or stay temporarily before buying?</li></ul></div>
+    <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">Do not present one region as best for everyone or rely only on broad maps. The recommendation must depend on budget, lifestyle and access needs.</div></div>
+    <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">45–60 sec · YouTube Shorts, Instagram Reels and TikTok · Owner: Unassigned</div></div>
+    <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Use HomeFrance.com Experience to identify the region that fits your budget and lifestyle.</div></div>
+    <div class="detail-row"><span class="detail-label">Research source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=j0h8qe3QA5g" target="_blank" rel="noopener">Open source video ↗</a></div></div>
+  </div>
+</details>
+</div></div>
       <div class="day"><div class="date">Sep 5</div><div class="content-card"><div class="ctitle">بهترین مناطق فرانسه برای بازنشستگی</div><div class="tags"><span class="tag fa">فارسی</span><span class="tag">Idea</span></div></div></div>
       <div class="day"><div class="date">Sep 6</div></div>
 
