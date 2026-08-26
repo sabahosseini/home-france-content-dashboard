@@ -6,205 +6,161 @@
 <title>Home France Content Dashboard</title>
 <style>
 :root{
-  --navy:#10263d;
-  --navy-soft:#203d59;
-  --ink:#172235;
-  --muted:#6f7b8d;
-  --bg:#f4f6f8;
-  --panel:#ffffff;
-  --line:#e1e7ed;
-  --urgent-bg:#ffebe8;
-  --urgent:#b54132;
-  --audience-bg:#fff3dc;
-  --audience:#8a5a08;
-  --source-bg:#f7f9fb;
+  --navy:#10263d;--ink:#172235;--muted:#6f7b8d;--bg:#f4f6f8;--panel:#fff;
+  --line:#e1e7ed;--urgent-bg:#ffebe8;--urgent:#b54132;
+  --audience-bg:#fff3dc;--audience:#8a5a08;--blue-bg:#eaf2ff;--blue:#315f9c;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .shell{max-width:1200px;margin:0 auto;padding:34px 24px 54px}
 .header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
 .brand{font-size:23px;line-height:1;font-weight:900;letter-spacing:.04em;color:var(--navy)}
 .subtitle{margin-top:8px;font-size:13px;color:var(--muted)}
 .updated{font-size:11px;color:var(--muted);white-space:nowrap}
-.preview{
-  margin-bottom:16px;
-  padding:10px 13px;
-  border:1px solid #e8ddbc;
-  border-radius:10px;
-  background:#fffaf0;
-  color:#72591c;
-  font-size:11px;
-}
-.panel{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:18px;
-}
+.preview{margin-bottom:16px;padding:10px 13px;border:1px solid #e8ddbc;border-radius:10px;background:#fffaf0;color:#72591c;font-size:11px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px}
 .panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}
 .panel h2{font-size:18px;margin:0}
-.count{
-  border:1px solid var(--line);
-  background:#f8fafc;
-  border-radius:999px;
-  padding:5px 9px;
-  font-size:10px;
-  font-weight:800;
-  color:#536174;
-}
+.count{border:1px solid var(--line);background:#f8fafc;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;color:#536174}
 .section-note{font-size:11px;color:var(--muted);margin:-7px 0 16px}
 .proposal-list{display:grid;gap:9px}
-.proposal{
-  display:grid;
-  grid-template-columns:58px minmax(0,1fr) auto;
-  gap:13px;
-  align-items:center;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:13px;
-}
+.proposal{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:13px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:13px}
 .proposal.urgent{border-left:4px solid var(--urgent)}
-.code{
-  height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--navy);
-  color:#fff;
-  border-radius:9px;
-  font-size:13px;
-  font-weight:900;
-}
+.code{height:38px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;border-radius:9px;font-size:13px;font-weight:900}
 .subject{font-size:13px;font-weight:780;line-height:1.35}
-.source{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.35;
-}
+.source{margin-top:5px;color:var(--muted);font-size:10px;line-height:1.35}
 .badges{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap}
 .badge{border-radius:999px;padding:5px 8px;font-size:8px;font-weight:900;letter-spacing:.035em;white-space:nowrap}
 .badge.urgent{background:var(--urgent-bg);color:var(--urgent)}
 .badge.audience{background:var(--audience-bg);color:var(--audience)}
-.calendar-list{border:1px dashed #cad3dd;border-radius:12px;padding:34px 20px;text-align:center}
-.empty-title{font-size:13px;font-weight:800}
-.empty-text{font-size:10px;color:var(--muted);line-height:1.55;margin-top:6px}
-.instruction{
-  display:inline-block;
-  margin-top:12px;
-  padding:7px 10px;
-  border-radius:8px;
-  background:var(--source-bg);
-  color:#536174;
-  font-size:10px;
-}
+.badge.language{background:var(--blue-bg);color:var(--blue)}
+.fa-copy{direction:rtl;text-align:right}
+.events{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.event{border:1px solid var(--line);border-radius:12px;padding:14px}
+.event-date{font-size:9px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+.event-title{font-size:13px;font-weight:800;margin-top:5px}
+.event-place{font-size:10px;color:var(--muted);margin-top:3px}
+.event-angle{font-size:10px;line-height:1.45;margin-top:9px;color:#465469}
+.event-source{display:inline-block;margin-top:9px;font-size:9px;color:var(--blue);text-decoration:none;font-weight:800}
+.calendar-stack{display:grid;gap:15px}
+.calendar{border:1px solid var(--line);border-radius:13px;padding:14px;overflow:hidden}
+.calendar-title{font-size:14px;font-weight:850;margin-bottom:11px}
+.weekdays,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.weekday{text-align:center;font-size:8px;color:var(--muted);font-weight:850;padding:4px}
+.day{min-height:76px;border:1px solid var(--line);border-radius:8px;padding:7px;background:#fbfcfd}
+.day.empty{background:#fff;border-color:transparent}
+.day.today{border-color:#8fa8c2;background:#f4f8fc}
+.day-number{font-size:9px;font-weight:800;color:#556274}
+.day-content{margin-top:7px;padding:5px;border-radius:6px;background:var(--navy);color:#fff;font-size:8px;line-height:1.3}
+.calendar-key{font-size:9px;color:var(--muted);margin-top:11px}
 .footer{text-align:center;color:#8a94a2;font-size:9px;margin-top:16px}
 @media(max-width:700px){
-  .shell{padding:22px 13px 40px}
-  .header{align-items:flex-start;flex-direction:column}
-  .updated{white-space:normal}
-  .panel{padding:14px}
-  .proposal{grid-template-columns:48px minmax(0,1fr)}
-  .badges{grid-column:2;justify-content:flex-start}
+  .shell{padding:22px 13px 40px}.header{align-items:flex-start;flex-direction:column}.updated{white-space:normal}
+  .panel{padding:14px}.proposal{grid-template-columns:48px minmax(0,1fr)}.badges{grid-column:2;justify-content:flex-start}
+  .events{grid-template-columns:1fr}.calendar{overflow-x:auto}.weekdays,.days{min-width:620px}.day{min-height:70px}
 }
 </style>
 </head>
 <body>
 <main class="shell">
   <header class="header">
-    <div>
-      <div class="brand">HOME FRANCE</div>
-      <div class="subtitle">Content Dashboard</div>
-    </div>
-    <div class="updated">Last updated · 26 August 2026</div>
+    <div><div class="brand">HOME FRANCE</div><div class="subtitle">Content Dashboard</div></div>
+    <div class="updated" id="updatedDate">Last updated</div>
   </header>
 
   <div class="preview">Design preview · Proposal examples are shown only to review the new dashboard structure.</div>
 
   <section class="panel">
-    <div class="panel-head">
-      <h2>Proposal Subjects</h2>
-      <span class="count">6 / 100</span>
-    </div>
+    <div class="panel-head"><h2>Proposal Subjects</h2><span class="count">6 / 100</span></div>
     <div class="section-note">Topics for team discussion. Nothing enters the calendar automatically.</div>
-
     <div class="proposal-list">
       <article class="proposal urgent">
         <div class="code">H1</div>
-        <div>
-          <div class="subject">Is a €20K French house really a bargain?</div>
-          <div class="source">Source: YouTube video received 26 August 2026 · Transcript</div>
-        </div>
-        <div class="badges"><span class="badge urgent">URGENT</span></div>
+        <div><div class="subject">Is a €20K French house really a bargain?</div><div class="source">Source: YouTube video received 26 August 2026 · Transcript</div></div>
+        <div class="badges"><span class="badge urgent">URGENT</span><span class="badge language">ENGLISH</span></div>
       </article>
-
       <article class="proposal">
         <div class="code">H2</div>
-        <div>
-          <div class="subject">Can I safely buy a French property using only Zoom or video?</div>
-          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
-        </div>
-        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+        <div><div class="subject">Can I safely buy a French property using only Zoom or video?</div><div class="source">Source: Audience comments on YouTube video received 26 August 2026</div></div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span><span class="badge language">ENGLISH</span></div>
       </article>
-
       <article class="proposal">
         <div class="code">H3</div>
-        <div>
-          <div class="subject">How can I check access to doctors before choosing a rural area?</div>
-          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
-        </div>
-        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+        <div><div class="subject">How can I check access to doctors before choosing a rural area?</div><div class="source">Source: Audience comments on YouTube video received 26 August 2026</div></div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span><span class="badge language">ENGLISH</span></div>
       </article>
-
       <article class="proposal">
         <div class="code">H4</div>
-        <div>
-          <div class="subject">What must a complete French property video tour show?</div>
-          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
-        </div>
-        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+        <div><div class="subject">What must a complete French property video tour show?</div><div class="source">Source: Audience comments on YouTube video received 26 August 2026</div></div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span><span class="badge language">ENGLISH</span></div>
       </article>
-
       <article class="proposal">
         <div class="code">H5</div>
-        <div>
-          <div class="subject">Should I rent in a French region before buying there?</div>
-          <div class="source">Source: YouTube video received 26 August 2026 · Audience discussion</div>
-        </div>
-        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+        <div class="fa-copy" lang="fa"><div class="subject">آیا خانهٔ ۲۰ هزار یورویی در فرانسه واقعاً یک فرصت خوب است؟</div><div class="source">منبع: ویدیوی یوتیوب دریافت‌شده در ۲۶ اوت ۲۰۲۶ · متن کامل ویدیو</div></div>
+        <div class="badges"><span class="badge language">فارسی</span></div>
       </article>
-
       <article class="proposal">
         <div class="code">H6</div>
-        <div>
-          <div class="subject">When can renovation cost more than the finished home is worth?</div>
-          <div class="source">Source: YouTube video received 26 August 2026 · Research proposal</div>
-        </div>
-        <div class="badges"></div>
+        <div class="fa-copy" lang="fa"><div class="subject">قبل از خرید خانهٔ ارزان در فرانسه چه هزینه‌هایی را باید حساب کنیم؟</div><div class="source">منبع: ویدیوی یوتیوب دریافت‌شده در ۲۶ اوت ۲۰۲۶ · متن کامل ویدیو</div></div>
+        <div class="badges"><span class="badge language">فارسی</span></div>
       </article>
     </div>
   </section>
 
   <section class="panel">
-    <div class="panel-head">
-      <h2>Approved Calendar</h2>
-      <span class="count">0 scheduled</span>
-    </div>
-    <div class="section-note">Only team-approved content with an explicit date appears here.</div>
-    <div class="calendar-list">
-      <div class="empty-title">No content has been scheduled yet.</div>
-      <div class="empty-text">A proposal will move here only after you or an authorised team member gives a calendar instruction.</div>
-      <div class="instruction">Example: Add H2 to 12 September.</div>
+    <div class="panel-head"><h2>Upcoming Events</h2><span class="count">2 verified</span></div>
+    <div class="section-note">Current opportunities that may become Proposal Subjects after team discussion.</div>
+    <div class="events">
+      <article class="event">
+        <div class="event-date">8–13 September 2026</div>
+        <div class="event-title">Cannes Yachting Festival</div>
+        <div class="event-place">Cannes · Vieux Port & Port Canto</div>
+        <div class="event-angle">Possible angle: international buyers, French Riviera lifestyle, luxury and second-home content.</div>
+        <a class="event-source" href="https://www.cannesyachtingfestival.com/en-gb/practical-information/plan-your-visit.html" target="_blank" rel="noopener">Official source ↗</a>
+      </article>
+      <article class="event">
+        <div class="event-date">19–20 September 2026</div>
+        <div class="event-title">European Heritage Days</div>
+        <div class="event-place">France · National programme</div>
+        <div class="event-angle">Possible angle: living among French heritage, neighbourhood identity and historic-property context.</div>
+        <a class="event-source" href="https://journeesdupatrimoine.culture.gouv.fr/en/" target="_blank" rel="noopener">Official programme ↗</a>
+      </article>
     </div>
   </section>
 
-  <div class="footer">Proposal decisions remain with the Home France team.</div>
+  <section class="panel">
+    <div class="panel-head"><h2>Approved Calendar</h2><span class="count">0 scheduled</span></div>
+    <div class="section-note">The current month and next month remain visible even when no content is scheduled.</div>
+    <div class="calendar-stack" id="calendars"></div>
+    <div class="calendar-key">Only team-approved content will appear inside a date. Example instruction: Add H2 to 12 September.</div>
+  </section>
+
+  <div class="footer">Proposal and scheduling decisions remain with the Home France team.</div>
 </main>
+<script>
+const scheduledContent = {};
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const weekdayNames = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+
+function calendarMarkup(year,month){
+  const firstDay=(new Date(year,month,1).getDay()+6)%7;
+  const totalDays=new Date(year,month+1,0).getDate();
+  const today=new Date();
+  let cells="";
+  for(let i=0;i<firstDay;i++) cells+='<div class="day empty" aria-hidden="true"></div>';
+  for(let day=1;day<=totalDays;day++){
+    const key=year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
+    const isToday=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===day;
+    const item=scheduledContent[key];
+    cells+='<div class="day'+(isToday?' today':'')+'"><div class="day-number">'+day+'</div>'+(item?'<div class="day-content">'+item+'</div>':'')+'</div>';
+  }
+  return '<div class="calendar"><div class="calendar-title">'+monthNames[month]+' '+year+'</div><div class="weekdays">'+weekdayNames.map(d=>'<div class="weekday">'+d+'</div>').join("")+'</div><div class="days">'+cells+'</div></div>';
+}
+
+const now=new Date();
+const next=new Date(now.getFullYear(),now.getMonth()+1,1);
+document.getElementById("calendars").innerHTML=calendarMarkup(now.getFullYear(),now.getMonth())+calendarMarkup(next.getFullYear(),next.getMonth());
+document.getElementById("updatedDate").textContent="Last updated · "+now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+</script>
 </body>
 </html>
