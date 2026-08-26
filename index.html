@@ -51,8 +51,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
 .badge.audience{background:var(--audience-bg);color:var(--audience)}
 .badge.language{background:var(--blue-bg);color:var(--blue)}
 .fa-copy{direction:rtl;text-align:right}
-.events{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.event{border:1px solid var(--line);border-radius:12px;padding:14px}
+.events{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.event{padding:14px 15px;border-bottom:1px solid var(--line)}
+.event:last-child{border-bottom:none}
 .event-date{font-size:9px;font-weight:900;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
 .event-title{font-size:13px;font-weight:800;margin-top:5px}
 .event-place{font-size:10px;color:var(--muted);margin-top:3px}
@@ -86,7 +87,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
 @media(max-width:700px){
   .shell{padding:22px 13px 40px}.header{align-items:flex-start;flex-direction:column}.updated{white-space:normal}
   .panel{padding:14px}.proposal{grid-template-columns:48px minmax(0,1fr)}.badges{grid-column:2;justify-content:flex-start}
-  .events{grid-template-columns:1fr}.calendar{overflow-x:auto}.weekdays,.days{min-width:620px}.day{min-height:70px}
+  .calendar{overflow-x:auto}.weekdays,.days{min-width:620px}.day{min-height:70px}
 }
 </style>
 </head>
