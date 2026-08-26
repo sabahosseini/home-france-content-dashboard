@@ -1,4 +1,4 @@
-const CONFIG={url:"https://jiupaabevawvnpwyjvjx.supabase.co",key:"REPLACE_WITH_SUPABASE_PUBLISHABLE_KEY",email:"dashboard@homefrance.internal"};
+const CONFIG={url:"https://jiupaabevawvnpwyjvjx.supabase.co",key:"sb_publishable_gOi9DT7HpLMZsR7w4uI0wA_S72AjUad",email:"dashboard@homefrance.internal"};
 const db=supabase.createClient(CONFIG.url,CONFIG.key),$=id=>document.getElementById(id);
 let proposals=[],calendar=[],events=[],notes=[],selected;
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
