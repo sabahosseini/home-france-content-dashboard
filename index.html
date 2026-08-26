@@ -23,12 +23,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .title h1{margin:0;font-size:27px;letter-spacing:-.4px}.title p{margin:5px 0 0;color:var(--muted);font-size:12px}
 .eyebrow{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#5e7895;margin-bottom:6px}.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:750}.btn.primary{background:var(--nav);color:#fff;border-color:var(--nav)}
 .notice{background:#fff8e6;border:1px solid #f0dfb8;color:#765311;border-radius:11px;padding:10px 13px;font-size:11px;margin-bottom:16px}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:13px}
-.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;position:relative;overflow:hidden}
-.metric .label{font-size:11px;color:var(--muted)}.metric .value{font-size:26px;font-weight:820;margin-top:4px}.metric .delta{font-size:10px;margin-top:4px;color:#28704a}
-.spark{position:absolute;right:12px;bottom:14px;width:74px;height:30px}
-.spark svg{width:100%;height:100%}
-.performance{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:17px}
+.performance-strip{display:flex;gap:8px;overflow-x:auto;margin-bottom:17px;padding:1px 0 5px;scrollbar-width:thin;scroll-snap-type:x proximity}.mini-stat{flex:1 0 128px;min-width:128px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 11px;scroll-snap-align:start}.mini-label{font-size:9px;color:var(--muted);white-space:nowrap}.mini-value{font-size:18px;font-weight:820;margin-top:2px;white-space:nowrap}.mini-meta{font-size:8px;color:#28704a;margin-top:2px;white-space:nowrap}
 .panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}
 .panel h3{margin:0 0 4px;font-size:15px}.hint{font-size:10px;color:var(--muted);margin-bottom:12px}
 .chart{height:180px;display:flex;align-items:flex-end;gap:14px;padding:14px 4px 22px;border-bottom:1px solid var(--line);position:relative}
@@ -51,7 +46,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .topic b{font-size:11px}.topic p{font-size:10px;color:var(--muted);margin:3px 0 0;line-height:1.4}.priority{font-size:8px;font-weight:850;padding:3px 6px;border-radius:999px;background:var(--red);color:var(--redText)}
 .research-brief{margin-bottom:17px}.brief-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:14px}.brief-block{background:#f7f9fb;border:1px solid var(--line);border-radius:11px;padding:13px}.brief-block b{font-size:11px}.brief-block p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0 0}.brief-link{color:var(--blueText);text-decoration:none}.event,.question{padding:9px 0;border-bottom:1px solid var(--line)}.event:last-child,.question:last-child{border-bottom:none}.event b,.question b{font-size:11px}.event span,.question span{display:block;margin-top:3px;color:var(--muted);font-size:9px}
 .bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pipeline{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}.stage{background:#f7f9fb;border:1px solid var(--line);border-radius:9px;padding:9px 5px;text-align:center}.stage b{display:block;font-size:16px}.stage span{font-size:8px;color:var(--muted)}
-@media(max-width:1050px){.app{grid-template-columns:1fr}.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.performance,.grid,.bottom,.brief-grid{grid-template-columns:1fr}}
+@media(max-width:1050px){.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:18px 14px 32px}.topbar{align-items:flex-start}.actions{display:none}.performance-strip{margin-left:-2px;margin-right:-2px}.mini-stat{flex-basis:116px;min-width:116px;padding:9px 10px}.grid,.bottom,.brief-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -75,22 +70,14 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 
 <div class="notice"><b>Visual proof of concept · Live preview connected · 26 August 2026.</b> Performance numbers are clearly labeled demo data. Publishing frequency, language mix and production integrations are not yet finalized.</div>
 
-<section class="metrics">
-  <div class="metric"><div class="label">Total monthly views</div><div class="value">128K</div><div class="delta">↑ 18% vs previous month</div><div class="spark"><svg viewBox="0 0 100 35"><polyline fill="none" stroke="#7a91ae" stroke-width="3" points="0,28 17,24 34,26 50,17 68,20 84,10 100,5"/></svg></div></div>
-  <div class="metric"><div class="label">Impressions</div><div class="value">342K</div><div class="delta">↑ 12% vs previous month</div><div class="spark"><svg viewBox="0 0 100 35"><polyline fill="none" stroke="#7a91ae" stroke-width="3" points="0,30 18,25 35,21 52,22 70,14 85,12 100,7"/></svg></div></div>
-  <div class="metric"><div class="label">Comments</div><div class="value">486</div><div class="delta">↑ 24% audience interaction</div><div class="spark"><svg viewBox="0 0 100 35"><polyline fill="none" stroke="#7a91ae" stroke-width="3" points="0,27 15,29 30,22 47,25 64,15 80,18 100,8"/></svg></div></div>
-  <div class="metric"><div class="label">Follower growth</div><div class="value">+1,240</div><div class="delta">YouTube + Instagram + TikTok</div><div class="spark"><svg viewBox="0 0 100 35"><polyline fill="none" stroke="#7a91ae" stroke-width="3" points="0,31 18,29 35,23 52,19 68,14 84,12 100,4"/></svg></div></div>
-</section>
-
-<section class="performance">
-  <div class="panel">
-    <h3>Platform Snapshot</h3><div class="hint">Demo data · will later pull real platform performance</div>
-    <div class="platforms">
-      <div class="platform-card"><div class="platform-top"><span>YouTube</span><span>↑ 16%</span></div><strong>54.8K</strong><span>Views · 182 comments</span></div>
-      <div class="platform-card"><div class="platform-top"><span>Instagram</span><span>↑ 23%</span></div><strong>61.2K</strong><span>Views · 241 comments</span></div>
-      <div class="platform-card"><div class="platform-top"><span>TikTok</span><span>New</span></div><strong>12.0K</strong><span>Views · 63 comments</span></div>
-    </div>
-  </div>
+<section class="performance-strip" aria-label="Demo performance snapshot">
+  <div class="mini-stat"><div class="mini-label">Monthly views</div><div class="mini-value">128K</div><div class="mini-meta">↑ 18%</div></div>
+  <div class="mini-stat"><div class="mini-label">Impressions</div><div class="mini-value">342K</div><div class="mini-meta">↑ 12%</div></div>
+  <div class="mini-stat"><div class="mini-label">Comments</div><div class="mini-value">486</div><div class="mini-meta">↑ 24%</div></div>
+  <div class="mini-stat"><div class="mini-label">Follower growth</div><div class="mini-value">+1,240</div><div class="mini-meta">All platforms</div></div>
+  <div class="mini-stat"><div class="mini-label">YouTube</div><div class="mini-value">54.8K</div><div class="mini-meta">182 comments</div></div>
+  <div class="mini-stat"><div class="mini-label">Instagram</div><div class="mini-value">61.2K</div><div class="mini-meta">241 comments</div></div>
+  <div class="mini-stat"><div class="mini-label">TikTok</div><div class="mini-value">12.0K</div><div class="mini-meta">63 comments</div></div>
 </section>
 
 <section class="calendar-wrap">
