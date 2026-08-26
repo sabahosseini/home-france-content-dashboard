@@ -67,7 +67,20 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
 .day.empty{background:#fff;border-color:transparent}
 .day.today{border-color:#8fa8c2;background:#f4f8fc}
 .day-number{font-size:9px;font-weight:800;color:#556274}
-.day-content{margin-top:7px;padding:5px;border-radius:6px;background:var(--navy);color:#fff;font-size:8px;line-height:1.3}
+.day-content{margin-top:7px;padding:6px;border-radius:7px;background:var(--navy);color:#fff;font-size:8px;line-height:1.35}
+.calendar-details{margin-top:6px;border-top:1px solid rgba(255,255,255,.22);padding-top:5px}
+.calendar-details summary{cursor:pointer;list-style:none;font-size:7px;font-weight:850;color:#dce9f5}
+.calendar-details summary::-webkit-details-marker{display:none}
+.calendar-details summary:after{content:" ↓"}
+.calendar-details[open] summary:after{content:" ↑"}
+.calendar-more{margin-top:5px;color:#fff}
+.calendar-more ul{margin:4px 0 0;padding-left:13px}
+.calendar-more li{margin-bottom:2px}
+.calendar-more a{display:inline-block;margin-top:5px;color:#fff;font-weight:850}
+.calendar-details.fa-calendar{direction:rtl;text-align:right}
+.calendar-details.fa-calendar summary{font-size:0}
+.calendar-details.fa-calendar summary:before{content:"مشاهده جزئیات";font-size:7px}
+.calendar-details.fa-calendar ul{padding-left:0;padding-right:13px}
 .calendar-key{font-size:9px;color:var(--muted);margin-top:11px}
 .footer{text-align:center;color:#8a94a2;font-size:9px;margin-top:16px}
 @media(max-width:700px){
@@ -87,7 +100,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
   <div class="preview">Design preview · Proposal examples are shown only to review the new dashboard structure.</div>
 
   <section class="panel">
-    <div class="panel-head"><h2>Proposal Subjects</h2><span class="count">6 / 100</span></div>
+    <div class="panel-head"><h2>Proposal Subjects</h2><span class="count">5 / 100</span></div>
     <div class="section-note">Topics for team discussion. Nothing enters the calendar automatically.</div>
     <div class="proposal-list">
       <article class="proposal urgent">
@@ -113,12 +126,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
         <div><div class="subject">What must a complete French property video tour show?</div><div class="source">Source: Audience comments on YouTube video received 26 August 2026</div></div>
         <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span><span class="badge language">ENGLISH</span></div>
         <details class="proposal-details"><summary>See more</summary><div class="proposal-more"><b>Must cover</b><ul class="must-cover"><li>Every room, outbuilding and exterior area</li><li>Roof, windows, heating, drainage and visible defects</li><li>Garden boundaries, road access, neighbours and noise</li><li>Why a video tour does not replace diagnostics or a survey</li></ul><a class="proposal-source-link" href="https://www.youtube.com/watch?v=cBIXSaYxV0M" target="_blank" rel="noopener">Open source video ↗</a></div></details>
-      </article>
-      <article class="proposal">
-        <div class="code">H5</div>
-        <div class="fa-copy" lang="fa"><div class="subject">آیا خانهٔ ۲۰ هزار یورویی در فرانسه واقعاً یک فرصت خوب است؟</div><div class="source">منبع: ویدیوی یوتیوب دریافت‌شده در ۲۶ اوت ۲۰۲۶ · متن کامل ویدیو</div></div>
-        <div class="badges"><span class="badge language">فارسی</span></div>
-        <details class="proposal-details fa-details" lang="fa"><summary></summary><div class="proposal-more"><b>نکات الزامی ویدیو</b><ul class="must-cover"><li>محاسبه بودجه کامل خرید، نه فقط قیمت آگهی</li><li>وضعیت فنی ملک و هزینه احتمالی بازسازی</li><li>دسترسی به پزشک، فروشگاه و حمل‌ونقل</li><li>هزینه نگهداری و امکان فروش دوباره</li></ul><a class="proposal-source-link" href="https://www.youtube.com/watch?v=1zD_FAIb-Cg" target="_blank" rel="noopener">مشاهده ویدیوی منبع ↗</a></div></details>
       </article>
       <article class="proposal">
         <div class="code">H6</div>
@@ -151,7 +158,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
   </section>
 
   <section class="panel">
-    <div class="panel-head"><h2>Approved Calendar</h2><span class="count">0 scheduled</span></div>
+    <div class="panel-head"><h2>Approved Calendar</h2><span class="count">1 scheduled</span></div>
     <div class="section-note">The current month and next month remain visible even when no content is scheduled.</div>
     <div class="calendar-stack" id="calendars"></div>
     <div class="calendar-key">Only team-approved content will appear inside a date. Example instruction: Add H2 to 12 September.</div>
@@ -160,7 +167,20 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-se
   <div class="footer">Proposal and scheduling decisions remain with the Home France team.</div>
 </main>
 <script>
-const scheduledContent = {};
+const scheduledContent = {
+  "2026-09-03":{
+    code:"H5",
+    title:"آیا خانهٔ ۲۰ هزار یورویی در فرانسه واقعاً یک فرصت خوب است؟",
+    lang:"fa",
+    points:[
+      "محاسبه بودجه کامل خرید، نه فقط قیمت آگهی",
+      "وضعیت فنی ملک و هزینه احتمالی بازسازی",
+      "دسترسی به پزشک، فروشگاه و حمل‌ونقل",
+      "هزینه نگهداری و امکان فروش دوباره"
+    ],
+    source:"https://www.youtube.com/watch?v=1zD_FAIb-Cg"
+  }
+};
 const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const weekdayNames = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
 
@@ -174,7 +194,18 @@ function calendarMarkup(year,month){
     const key=year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
     const isToday=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===day;
     const item=scheduledContent[key];
-    cells+='<div class="day'+(isToday?' today':'')+'"><div class="day-number">'+day+'</div>'+(item?'<div class="day-content">'+item+'</div>':'')+'</div>';
+    let content="";
+    if(item){
+      const isFa=item.lang==="fa";
+      const label=isFa?"مشاهده جزئیات":"See more";
+      const linkLabel=isFa?"مشاهده ویدیوی منبع ↗":"Open source video ↗";
+      content='<div class="day-content"'+(isFa?' dir="rtl" lang="fa"':'')+'><b>'+item.code+'</b> · '+item.title+
+        '<details class="calendar-details'+(isFa?' fa-calendar':'')+'"><summary>'+(isFa?'':label)+'</summary><div class="calendar-more"><ul>'+
+        item.points.map(point=>'<li>'+point+'</li>').join("")+'</ul>'+
+        (item.source?'<a href="'+item.source+'" target="_blank" rel="noopener">'+linkLabel+'</a>':'')+
+        '</div></details></div>';
+    }
+    cells+='<div class="day'+(isToday?' today':'')+'"><div class="day-number">'+day+'</div>'+content+'</div>';
   }
   return '<div class="calendar"><div class="calendar-title">'+monthNames[month]+' '+year+'</div><div class="weekdays">'+weekdayNames.map(d=>'<div class="weekday">'+d+'</div>').join("")+'</div><div class="days">'+cells+'</div></div>';
 }
