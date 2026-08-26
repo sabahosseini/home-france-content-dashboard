@@ -1,0 +1,33 @@
+create extension if not exists pgcrypto;
+create table public.proposals(id uuid primary key default gen_random_uuid(),code text not null unique check(code~'^H[0-9]+$'),subject text not null,language text not null default'en' check(language in('en','fa')),source_label text,source_url text,must_cover jsonb not null default'[]' check(jsonb_typeof(must_cover)='array'),is_urgent boolean not null default false,is_audience_priority boolean not null default false,scheduled_at timestamptz,created_at timestamptz not null default now());
+create table public.calendar_items(id uuid primary key default gen_random_uuid(),proposal_id uuid not null unique references public.proposals(id),code text not null,subject text not null,language text not null,must_cover jsonb not null default'[]',source_url text,scheduled_date date not null,platform text,created_at timestamptz not null default now());
+create table public.upcoming_events(id uuid primary key default gen_random_uuid(),starts_on date not null,ends_on date,date_label text not null,title text not null,place text,content_angle text,source_url text,created_at timestamptz not null default now());
+create table public.notes(id uuid primary key default gen_random_uuid(),note_text text not null check(char_length(note_text) between 1 and 2000),created_at timestamptz not null default now());
+alter table public.proposals enable row level security;alter table public.calendar_items enable row level security;alter table public.upcoming_events enable row level security;alter table public.notes enable row level security;
+revoke all on public.proposals,public.calendar_items,public.upcoming_events,public.notes from anon;
+grant select,insert,update on public.proposals,public.calendar_items,public.upcoming_events,public.notes to authenticated;
+create policy proposals_select on public.proposals for select to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy proposals_insert on public.proposals for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy proposals_update on public.proposals for update to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal') with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy calendar_select on public.calendar_items for select to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy calendar_insert on public.calendar_items for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy events_select on public.upcoming_events for select to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy events_insert on public.upcoming_events for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy events_update on public.upcoming_events for update to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal') with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy notes_select on public.notes for select to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy notes_insert on public.notes for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create or replace function public.schedule_proposal(p_proposal_id uuid,p_scheduled_date date,p_platform text)returns void language plpgsql security invoker set search_path='' as $$
+declare p public.proposals;
+begin select*into p from public.proposals where id=p_proposal_id and scheduled_at is null for update;if not found then raise exception'Proposal unavailable';end if;
+insert into public.calendar_items(proposal_id,code,subject,language,must_cover,source_url,scheduled_date,platform)values(p.id,p.code,p.subject,p.language,p.must_cover,p.source_url,p_scheduled_date,p_platform);
+update public.proposals set scheduled_at=now()where id=p.id;end;$$;
+revoke all on function public.schedule_proposal(uuid,date,text)from public,anon;grant execute on function public.schedule_proposal(uuid,date,text)to authenticated;
+insert into public.proposals(code,subject,language,source_label,source_url,must_cover,is_urgent,is_audience_priority)values
+('H1','Is a €20K French house really a bargain?','en','YouTube video · 26 August 2026 · Transcript','https://www.youtube.com/watch?v=1zD_FAIb-Cg','["Full purchase budget, not only the asking price","Property condition, renovation needs and energy performance","Access to shops, healthcare and transport","Ongoing ownership costs and resale demand"]',true,false),
+('H2','Can I safely buy a French property using only Zoom or video?','en','Audience comments · YouTube · 26 August 2026','https://www.youtube.com/watch?v=q2v3LPDQaGQ','["What a remote viewing can and cannot verify","Independent in-person inspection before commitment","Diagnostics, boundaries, noise and surroundings","When to involve the notaire and specialists"]',false,true),
+('H3','How can I check access to doctors before choosing a rural area?','en','Audience comments · YouTube · 26 August 2026','https://www.youtube.com/watch?v=j0h8qe3QA5g','["Distance to GP, pharmacy and hospital","Realistic driving and public-transport times","Availability versus map proximity","Test ordinary daily life before buying"]',false,true),
+('H4','What must a complete French property video tour show?','en','Audience comments · YouTube · 26 August 2026','https://www.youtube.com/watch?v=cBIXSaYxV0M','["Every room, outbuilding and exterior","Roof, windows, heating and visible defects","Boundaries, access, neighbours and noise","A tour does not replace diagnostics"]',false,true),
+('H6','قبل از خرید خانهٔ ارزان در فرانسه چه هزینه‌هایی را باید حساب کنیم؟','fa','ویدیوی یوتیوب · ۲۶ اوت ۲۰۲۶ · متن کامل','https://www.youtube.com/watch?v=1zD_FAIb-Cg','["هزینه‌های خرید و دفترخانه","بازسازی، عایق‌بندی و مصرف انرژی","مالیات، بیمه و نگهداری سالانه","هزینه رفت‌وآمد و خدمات روزمره"]',false,false);
+insert into public.upcoming_events(starts_on,ends_on,date_label,title,place,content_angle,source_url)values
+('2026-09-08','2026-09-13','8–13 September 2026','Cannes Yachting Festival','Cannes · Vieux Port & Port Canto','International buyers, Riviera lifestyle, luxury and second homes.','https://www.cannesyachtingfestival.com/en-gb/practical-information/plan-your-visit.html'),
+('2026-09-19','2026-09-20','19–20 September 2026','European Heritage Days','France · National programme','French heritage, neighbourhood identity and historic-property context.','https://journeesdupatrimoine.culture.gouv.fr/en/');
