@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home France Content Dashboard</title>
+<title>Home France Content Intelligence System</title>
 <style>
 :root{
   --bg:#f3f5f8; --panel:#fff; --text:#172033; --muted:#727b89; --line:#e3e8ef;
@@ -21,7 +21,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .navitem small{display:block;font-size:10px;color:#9fb0c0;margin-top:2px}
 .main{padding:25px 27px 40px;overflow:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}
 .title h1{margin:0;font-size:27px;letter-spacing:-.4px}.title p{margin:5px 0 0;color:var(--muted);font-size:12px}
-.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:750}.btn.primary{background:var(--nav);color:#fff;border-color:var(--nav)}
+.eyebrow{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#5e7895;margin-bottom:6px}.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:750}.btn.primary{background:var(--nav);color:#fff;border-color:var(--nav)}
 .notice{background:#fff8e6;border:1px solid #f0dfb8;color:#765311;border-radius:11px;padding:10px 13px;font-size:11px;margin-bottom:16px}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:13px}
 .metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;position:relative;overflow:hidden}
@@ -33,7 +33,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .panel h3{margin:0 0 4px;font-size:15px}.hint{font-size:10px;color:var(--muted);margin-bottom:12px}
 .chart{height:180px;display:flex;align-items:flex-end;gap:14px;padding:14px 4px 22px;border-bottom:1px solid var(--line);position:relative}
 .bar-group{flex:1;display:flex;align-items:flex-end;gap:5px;height:100%;position:relative}
-.bar{flex:1;border-radius:6px 6px 2px 2px;min-width:12px}.bar.yt{background:#cfd9e7}.bar.ig{background:#91a9c8}
+.bar{flex:1;border-radius:6px 6px 2px 2px;min-width:12px}.bar.yt{background:#cfd9e7}.bar.ig{background:#91a9c8}.bar.tt{background:#334f70}
 .bar-label{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:9px;color:var(--muted)}
 .legend{display:flex;gap:14px;margin-top:11px;font-size:10px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
 .platforms{display:grid;gap:9px}.platform-card{border:1px solid var(--line);border-radius:11px;padding:11px}
@@ -50,7 +50,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 .topic:last-child{border-bottom:none}.num{width:22px;height:22px;border-radius:7px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
 .topic b{font-size:11px}.topic p{font-size:10px;color:var(--muted);margin:3px 0 0;line-height:1.4}.priority{font-size:8px;font-weight:850;padding:3px 6px;border-radius:999px;background:var(--red);color:var(--redText)}
 .event,.question{padding:9px 0;border-bottom:1px solid var(--line)}.event:last-child,.question:last-child{border-bottom:none}.event b,.question b{font-size:11px}.event span,.question span{display:block;margin-top:3px;color:var(--muted);font-size:9px}
-.bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.stage{background:#f7f9fb;border:1px solid var(--line);border-radius:9px;padding:9px 5px;text-align:center}.stage b{display:block;font-size:16px}.stage span{font-size:8px;color:var(--muted)}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pipeline{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}.stage{background:#f7f9fb;border:1px solid var(--line);border-radius:9px;padding:9px 5px;text-align:center}.stage b{display:block;font-size:16px}.stage span{font-size:8px;color:var(--muted)}
 @media(max-width:1050px){.app{grid-template-columns:1fr}.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.performance,.grid,.bottom{grid-template-columns:1fr}}
 </style>
 </head>
@@ -69,11 +69,11 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 </aside>
 <main class="main">
 <div class="topbar">
-  <div class="title"><h1>Content Dashboard</h1><p>Planning, audience intelligence and performance for Home France social content.</p></div>
-  <div class="actions"><button class="btn">+ Add Idea</button><button class="btn primary">+ Add Content</button></div>
+  <div class="title"><div class="eyebrow">Phase A · CEO Prototype</div><h1>Content Intelligence Dashboard</h1><p>Planning, audience intelligence and performance for Home France social content.</p></div>
+  <div class="actions"><button class="btn" title="Prototype control">Research Inbox</button><button class="btn primary" title="Prototype control">Monday Intelligence</button></div>
 </div>
 
-<div class="notice"><b>Prototype:</b> performance numbers below are demo data to illustrate the future dashboard. Publishing frequency and language mix are not yet finalized.</div>
+<div class="notice"><b>Visual proof of concept — updated 26 August 2026.</b> Performance numbers are clearly labeled demo data. Publishing frequency, language mix and production integrations are not yet finalized.</div>
 
 <section class="metrics">
   <div class="metric"><div class="label">Total monthly views</div><div class="value">128K</div><div class="delta">↑ 18% vs previous month</div><div class="spark"><svg viewBox="0 0 100 35"><polyline fill="none" stroke="#7a91ae" stroke-width="3" points="0,28 17,24 34,26 50,17 68,20 84,10 100,5"/></svg></div></div>
@@ -86,12 +86,12 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
   <div class="panel">
     <h3>Monthly Performance Trend</h3><div class="hint">Demo visualization · weekly views by platform</div>
     <div class="chart">
-      <div class="bar-group"><div class="bar yt" style="height:38%"></div><div class="bar ig" style="height:54%"></div><div class="bar-label">Week 1</div></div>
-      <div class="bar-group"><div class="bar yt" style="height:52%"></div><div class="bar ig" style="height:63%"></div><div class="bar-label">Week 2</div></div>
-      <div class="bar-group"><div class="bar yt" style="height:66%"></div><div class="bar ig" style="height:70%"></div><div class="bar-label">Week 3</div></div>
-      <div class="bar-group"><div class="bar yt" style="height:77%"></div><div class="bar ig" style="height:88%"></div><div class="bar-label">Week 4</div></div>
+      <div class="bar-group"><div class="bar yt" style="height:38%"></div><div class="bar ig" style="height:54%"></div><div class="bar tt" style="height:22%"></div><div class="bar-label">Week 1</div></div>
+      <div class="bar-group"><div class="bar yt" style="height:52%"></div><div class="bar ig" style="height:63%"></div><div class="bar tt" style="height:31%"></div><div class="bar-label">Week 2</div></div>
+      <div class="bar-group"><div class="bar yt" style="height:66%"></div><div class="bar ig" style="height:70%"></div><div class="bar tt" style="height:44%"></div><div class="bar-label">Week 3</div></div>
+      <div class="bar-group"><div class="bar yt" style="height:77%"></div><div class="bar ig" style="height:88%"></div><div class="bar tt" style="height:58%"></div><div class="bar-label">Week 4</div></div>
     </div>
-    <div class="legend"><span><i class="dot" style="background:#cfd9e7"></i>YouTube</span><span><i class="dot" style="background:#91a9c8"></i>Instagram</span></div>
+    <div class="legend"><span><i class="dot" style="background:#cfd9e7"></i>YouTube</span><span><i class="dot" style="background:#91a9c8"></i>Instagram</span><span><i class="dot" style="background:#334f70"></i>TikTok</span></div>
   </div>
   <div class="panel">
     <h3>Platform Snapshot</h3><div class="hint">Demo data · will later pull real platform performance</div>
@@ -104,7 +104,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 </section>
 
 <section class="calendar-wrap">
-  <div class="calendar-head"><h2>September 2026 Content Calendar</h2><div class="month-label">Draft calendar · YouTube Shorts + Instagram Reels + TikTok</div></div>
+  <div class="calendar-head"><h2>September 2026 Content Calendar</h2><div class="month-label">Draft · English + فارسی · YouTube Shorts + Instagram Reels + TikTok</div></div>
   <div class="cal-scroll">
     <div class="weekdays"><div class="weekday">MON</div><div class="weekday">TUE</div><div class="weekday">WED</div><div class="weekday">THU</div><div class="weekday">FRI</div><div class="weekday">SAT</div><div class="weekday">SUN</div></div>
     <div class="month-grid">
@@ -165,8 +165,8 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 </div>
 
 <div class="bottom">
-<section class="panel"><h3>Content Pipeline</h3><div class="hint">Prototype production status.</div><div class="pipeline">
-<div class="stage"><b>6</b><span>Research</span></div><div class="stage"><b>4</b><span>Approved</span></div><div class="stage"><b>2</b><span>Script</span></div><div class="stage"><b>1</b><span>Record</span></div><div class="stage"><b>1</b><span>Edit</span></div><div class="stage"><b>1</b><span>Ready</span></div><div class="stage"><b>8</b><span>Published</span></div>
+<section class="panel"><h3>Content Pipeline</h3><div class="hint">Prototype production status · configurable workflow.</div><div class="pipeline">
+<div class="stage"><b>6</b><span>Research</span></div><div class="stage"><b>4</b><span>Approved</span></div><div class="stage"><b>2</b><span>Script</span></div><div class="stage"><b>1</b><span>Recording</span></div><div class="stage"><b>1</b><span>Editing</span></div><div class="stage"><b>1</b><span>Ready</span></div><div class="stage"><b>3</b><span>Scheduled</span></div><div class="stage"><b>8</b><span>Published</span></div>
 </div></section>
 <section class="panel"><h3>Top Audience Questions</h3><div class="hint">Questions currently showing the strongest content potential.</div>
 <div class="question"><b>How will France tax my U.S. retirement income?</b><span>American retirees · Very high intent</span></div>
@@ -175,6 +175,7 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSy
 <div class="question"><b>Which French region fits my budget and lifestyle?</b><span>Buyers / retirees · Very high intent</span></div>
 </section>
 </div>
+<div style="margin-top:16px;text-align:center;color:var(--muted);font-size:9px">Phase A prototype · Static interface today · Dynamic data and AI connections are a future development phase.</div>
 </main>
 </div>
 </body>
