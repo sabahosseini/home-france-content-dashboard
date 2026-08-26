@@ -3,187 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home France Content Intelligence System</title>
+<title>Home France Content Dashboard</title>
 <style>
 :root{
-  --bg:#f3f5f8; --panel:#fff; --text:#172033; --muted:#727b89; --line:#e3e8ef;
-  --nav:#0e2238; --nav2:#173754; --soft:#eef3f7;
-  --green:#e7f7ee; --greenText:#25724a; --blue:#eaf1ff; --blueText:#285da8;
-  --orange:#fff2df; --orangeText:#9a5a00; --pink:#f8eafd; --pinkText:#7e3e94;
-  --red:#fee9e7; --redText:#a93d31;
+  --navy:#10263d;
+  --navy-soft:#203d59;
+  --ink:#172235;
+  --muted:#6f7b8d;
+  --bg:#f4f6f8;
+  --panel:#ffffff;
+  --line:#e1e7ed;
+  --urgent-bg:#ffebe8;
+  --urgent:#b54132;
+  --audience-bg:#fff3dc;
+  --audience:#8a5a08;
+  --source-bg:#f7f9fb;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-.app{min-height:100vh}
-.main{padding:25px 27px 40px;overflow:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:19px}
-.title h1{margin:0;font-size:27px;letter-spacing:-.4px}.title p{margin:5px 0 0;color:var(--muted);font-size:12px}
-.eyebrow{font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#5e7895;margin-bottom:6px}
-.notice{background:#fff8e6;border:1px solid #f0dfb8;color:#765311;border-radius:11px;padding:10px 13px;font-size:11px;margin-bottom:16px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}
-.panel h3{margin:0 0 4px;font-size:15px}.hint{font-size:10px;color:var(--muted);margin-bottom:12px}
-.chart{height:180px;display:flex;align-items:flex-end;gap:14px;padding:14px 4px 22px;border-bottom:1px solid var(--line);position:relative}
-.bar-group{flex:1;display:flex;align-items:flex-end;gap:5px;height:100%;position:relative}
-.bar{flex:1;border-radius:6px 6px 2px 2px;min-width:12px}.bar.yt{background:#cfd9e7}.bar.ig{background:#91a9c8}.bar.tt{background:#334f70}
-.bar-label{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:9px;color:var(--muted)}
-.legend{display:flex;gap:14px;margin-top:11px;font-size:10px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.platforms{display:grid;gap:9px}.platform-card{border:1px solid var(--line);border-radius:11px;padding:11px}
-.platform-top{display:flex;justify-content:space-between;font-size:11px;font-weight:760}.platform-card strong{font-size:20px;display:block;margin-top:5px}.platform-card span{font-size:10px;color:var(--muted)}
-.calendar-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;margin-bottom:17px}
-.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.calendar-head h2{margin:0;font-size:17px}.month-label{font-size:11px;color:var(--muted)}
-.weekdays,.month-grid{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));gap:6px;min-width:960px}
-.cal-scroll{overflow-x:auto}.weekday{text-align:center;color:var(--muted);font-size:10px;font-weight:800;padding:6px}
-.day{min-height:137px;background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:7px}.day.muted{opacity:.44}.date{font-size:10px;color:var(--muted);font-weight:750;margin-bottom:6px}
-.content-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px;margin-bottom:5px;box-shadow:0 1px 2px rgba(16,24,40,.025)}
-.ctitle{font-size:10px;line-height:1.3;font-weight:740;margin-bottom:5px}.content-card details{margin:-7px}.content-card summary{list-style:none;cursor:pointer;padding:7px;border-radius:8px}.content-card summary::-webkit-details-marker{display:none}.content-card summary:after{content:"Open brief ↓";display:block;margin-top:6px;font-size:8px;font-weight:800;color:var(--blueText)}.content-card details[open] summary:after{content:"Close brief ↑"}.content-card details.fa-brief summary:after{content:"مشاهده بریف ↓"}.content-card details.fa-brief[open] summary:after{content:"بستن بریف ↑"}.fa-brief .brief-detail{direction:rtl;text-align:right}.fa-brief .detail-list{padding-left:0;padding-right:15px}.brief-detail{border-top:1px solid var(--line);padding:9px 8px 8px;background:#fbfcfe}.detail-row{margin-bottom:8px}.detail-row:last-child{margin-bottom:0}.detail-label{display:block;font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.05em;color:#536477;margin-bottom:3px}.detail-text,.detail-list{font-size:9px;line-height:1.45;color:#3e4b5a}.detail-list{margin:3px 0 0;padding-left:15px}.detail-list li{margin-bottom:3px}.detail-source{color:var(--blueText);text-decoration:none;font-weight:750}.tags{display:flex;flex-wrap:wrap;gap:3px}.tag{font-size:8px;padding:2px 5px;border-radius:999px;background:var(--soft);color:#55616e}
-.tag.en{background:var(--blue);color:var(--blueText)}.tag.fa{background:var(--pink);color:var(--pinkText)}.tag.ready{background:var(--green);color:var(--greenText)}.tag.research{background:var(--orange);color:var(--orangeText)}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-bottom:14px}.topic{display:grid;grid-template-columns:24px 1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
-.topic:last-child{border-bottom:none}.num{width:22px;height:22px;border-radius:7px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
-.topic b{font-size:11px}.topic p{font-size:10px;color:var(--muted);margin:3px 0 0;line-height:1.4}.priority{font-size:8px;font-weight:850;padding:3px 6px;border-radius:999px;background:var(--red);color:var(--redText)}
-.research-brief{margin-bottom:17px}.brief-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:14px}.brief-block{background:#f7f9fb;border:1px solid var(--line);border-radius:11px;padding:13px}.brief-block b{font-size:11px}.brief-block p{font-size:10px;color:var(--muted);line-height:1.5;margin:5px 0 0}.brief-link{color:var(--blueText);text-decoration:none}.event,.question{padding:9px 0;border-bottom:1px solid var(--line)}.event:last-child,.question:last-child{border-bottom:none}.event b,.question b{font-size:11px}.event span,.question span{display:block;margin-top:3px;color:var(--muted);font-size:9px}
-.bottom{display:block}
-@media(max-width:1050px){.main{padding:18px 14px 32px}.topbar{align-items:flex-start}.grid,.brief-grid{grid-template-columns:1fr}}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.shell{max-width:1200px;margin:0 auto;padding:34px 24px 54px}
+.header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+.brand{font-size:23px;line-height:1;font-weight:900;letter-spacing:.04em;color:var(--navy)}
+.subtitle{margin-top:8px;font-size:13px;color:var(--muted)}
+.updated{font-size:11px;color:var(--muted);white-space:nowrap}
+.preview{
+  margin-bottom:16px;
+  padding:10px 13px;
+  border:1px solid #e8ddbc;
+  border-radius:10px;
+  background:#fffaf0;
+  color:#72591c;
+  font-size:11px;
+}
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:18px;
+}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}
+.panel h2{font-size:18px;margin:0}
+.count{
+  border:1px solid var(--line);
+  background:#f8fafc;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:800;
+  color:#536174;
+}
+.section-note{font-size:11px;color:var(--muted);margin:-7px 0 16px}
+.proposal-list{display:grid;gap:9px}
+.proposal{
+  display:grid;
+  grid-template-columns:58px minmax(0,1fr) auto;
+  gap:13px;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+}
+.proposal.urgent{border-left:4px solid var(--urgent)}
+.code{
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--navy);
+  color:#fff;
+  border-radius:9px;
+  font-size:13px;
+  font-weight:900;
+}
+.subject{font-size:13px;font-weight:780;line-height:1.35}
+.source{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.35;
+}
+.badges{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap}
+.badge{border-radius:999px;padding:5px 8px;font-size:8px;font-weight:900;letter-spacing:.035em;white-space:nowrap}
+.badge.urgent{background:var(--urgent-bg);color:var(--urgent)}
+.badge.audience{background:var(--audience-bg);color:var(--audience)}
+.calendar-list{border:1px dashed #cad3dd;border-radius:12px;padding:34px 20px;text-align:center}
+.empty-title{font-size:13px;font-weight:800}
+.empty-text{font-size:10px;color:var(--muted);line-height:1.55;margin-top:6px}
+.instruction{
+  display:inline-block;
+  margin-top:12px;
+  padding:7px 10px;
+  border-radius:8px;
+  background:var(--source-bg);
+  color:#536174;
+  font-size:10px;
+}
+.footer{text-align:center;color:#8a94a2;font-size:9px;margin-top:16px}
+@media(max-width:700px){
+  .shell{padding:22px 13px 40px}
+  .header{align-items:flex-start;flex-direction:column}
+  .updated{white-space:normal}
+  .panel{padding:14px}
+  .proposal{grid-template-columns:48px minmax(0,1fr)}
+  .badges{grid-column:2;justify-content:flex-start}
+}
 </style>
 </head>
 <body>
-<div class="app">
-<main class="main">
-<div class="topbar">
-  <div class="title"><div class="eyebrow">Phase A · CEO Prototype</div><h1>Content Intelligence Dashboard</h1><p>Planning, audience intelligence and performance for Home France social content.</p></div>
-</div>
-
-<div class="notice"><b>Monday Intelligence test · Content dataset refreshed from 4 Telegram-style YouTube inputs · 26 August 2026.</b> Performance numbers remain demo data and were intentionally not updated.</div>
-
-<section class="calendar-wrap">
-  <div class="calendar-head"><h2>September 2026 Content Calendar</h2><div class="month-label">Monday Intelligence test · 4 Telegram sources · Draft</div></div>
-  <div class="cal-scroll">
-    <div class="weekdays"><div class="weekday">MON</div><div class="weekday">TUE</div><div class="weekday">WED</div><div class="weekday">THU</div><div class="weekday">FRI</div><div class="weekday">SAT</div><div class="weekday">SUN</div></div>
-    <div class="month-grid">
-      <div class="day muted"><div class="date">Aug 31</div></div>
-      <div class="day"><div class="date">Sep 1</div><div class="content-card"><details><summary><div class="ctitle">Is a €20K French House Really a Bargain?</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Replace headline-price excitement with a complete affordability check.</div></div>
-        <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">International buyers attracted by very low-priced rural French homes.</div></div>
-        <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“A €20,000 house can become the most expensive bargain you ever buy.”</div></div>
-        <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Structural condition, roof, electricity, plumbing and diagnostics</li><li>Renovation and energy-upgrade budget</li><li>Acquisition costs, insurance, taxes and ongoing maintenance</li><li>Resale liquidity and year-round local demand</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Audience questions</span><ul class="detail-list"><li>Is it liveable now?</li><li>How much renovation is hidden?</li><li>Why is it so cheap?</li><li>Could I resell it later?</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">Do not call a listing a bargain without a property-specific inspection, diagnostics review and total-cost estimate.</div></div>
-        <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">60 sec · English · YouTube Shorts, Instagram Reels, TikTok · Owner: Unassigned</div></div>
-        <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Ask Home France to evaluate the complete purchase—not only the listing price.</div></div>
-        <div class="detail-row"><span class="detail-label">Source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=1zD_FAIb-Cg" target="_blank" rel="noopener">Open source video ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 2</div><div class="content-card"><details><summary><div class="ctitle">Never Buy a French Home From a Video Tour Alone</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Show remote buyers how video viewings help—and what they cannot verify.</div></div>
-        <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">Overseas buyers considering an offer after a Zoom or recorded viewing.</div></div>
-        <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“A beautiful Zoom tour can show you the rooms. It cannot tell you everything you are buying.”</div></div>
-        <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Request a continuous room-by-room and exterior walkthrough</li><li>Inspect roof, boundaries, access, outbuildings, noise and surroundings</li><li>Review the diagnostic file and planning information</li><li>Use an independent in-person inspection before commitment</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Audience questions</span><ul class="detail-list"><li>Can I safely buy remotely?</li><li>What can video hide?</li><li>Who should inspect for me?</li><li>When does an offer become binding?</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">Explain the actual purchase stage and legal effect of documents with a notaire; do not give a universal legal conclusion.</div></div>
-        <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">60–75 sec · English · All short-form platforms · Owner: Unassigned</div></div>
-        <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Home France can coordinate a buyer-focused viewing and local checks.</div></div>
-        <div class="detail-row"><span class="detail-label">Source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=q2v3LPDQaGQ" target="_blank" rel="noopener">Open source video ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 3</div><div class="content-card"><details class="fa-brief" lang="fa" dir="rtl"><summary><div class="ctitle">خانه ارزان در فرانسه؛ فرصت یا دردسر؟</div><div class="tags"><span class="tag fa">فارسی</span><span class="tag research">تحقیق</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">هدف ویدیو</span><div class="detail-text">نشان‌دادن اینکه قیمت پایین بدون بررسی هزینه تعمیر و کیفیت زندگی معیار مناسبی برای خرید نیست.</div></div>
-        <div class="detail-row"><span class="detail-label">مخاطب هدف</span><div class="detail-text">فارسی‌زبانانی که با دیدن خانه‌های بسیار ارزان روستایی به خرید ملک در فرانسه فکر می‌کنند.</div></div>
-        <div class="detail-row"><span class="detail-label">هوک پیشنهادی</span><div class="detail-text">«خانه بیست‌هزار یورویی شاید ارزان باشد، اما آیا واقعاً می‌شود داخلش زندگی کرد؟»</div></div>
-        <div class="detail-row"><span class="detail-label">نکات الزامی</span><ul class="detail-list"><li>وضعیت سقف، برق، لوله‌کشی و عایق</li><li>هزینه واقعی بازسازی و انرژی</li><li>فاصله از شهر، پزشک، فروشگاه و حمل‌ونقل</li><li>ارزش فروش دوباره و تقاضای محلی</li></ul></div>
-        <div class="detail-row"><span class="detail-label">سؤال‌های مخاطبان</span><ul class="detail-list"><li>چرا این خانه این‌قدر ارزان است؟</li><li>هزینه تعمیرش چقدر می‌شود؟</li><li>برای زندگی دائمی مناسب است؟</li><li>بعداً مشتری برای فروش دارد؟</li></ul></div>
-        <div class="detail-row"><span class="detail-label">ملاحظه مهم</span><div class="detail-text">هیچ نتیجه قطعی بدون بازدید، گزارش‌های فنی و برآورد متخصص داده نشود.</div></div>
-        <div class="detail-row"><span class="detail-label">اطلاعات تولید</span><div class="detail-text">۶۰ ثانیه · فارسی · یوتیوب شورت، اینستاگرام ریلز و تیک‌تاک · مسئول: تعیین نشده</div></div>
-        <div class="detail-row"><span class="detail-label">دعوت به اقدام</span><div class="detail-text">قبل از انتخاب ملک، بودجه کامل خرید را با Home France بررسی کنید.</div></div>
-        <div class="detail-row"><span class="detail-label">منبع</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=1zD_FAIb-Cg" target="_blank" rel="noopener">مشاهده ویدیوی منبع ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 4</div><div class="content-card"><details><summary><div class="ctitle">The Best French Region Is Not a Map</div><div class="tags"><span class="tag en">English</span><span class="tag research">High Signal</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Turn region rankings into a personal decision framework.</div></div>
-        <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">Foreign buyers and retirees deciding where in France to live.</div></div>
-        <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“The best region in France is not the cheapest one—it is the one that still works for you on an ordinary Tuesday.”</div></div>
-        <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Doctor and hospital access</li><li>Airport, rail and everyday mobility</li><li>Shops, community, climate and year-round life</li><li>Employment needs versus retirement priorities</li><li>Trial stay before buying</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Audience questions</span><ul class="detail-list"><li>Are rural areas medical deserts?</li><li>How close should I be to an airport?</li><li>Which climate fits me?</li><li>Should I rent before I buy?</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">Regional maps are generalisations. Compare actual towns and services; avoid declaring one area best for everyone.</div></div>
-        <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">60–75 sec · English · All short-form platforms · Owner: Unassigned</div></div>
-        <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Use HomeFrance.com Experience to match location with budget and lifestyle.</div></div>
-        <div class="detail-row"><span class="detail-label">Source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=j0h8qe3QA5g" target="_blank" rel="noopener">Open source video ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 5</div><div class="content-card"><details><summary><div class="ctitle">What a Complete French Property Tour Must Show</div><div class="tags"><span class="tag en">English</span><span class="tag research">Research</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Create a buyer-first standard for remote property videos.</div></div>
-        <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">International buyers using YouTube to shortlist French property.</div></div>
-        <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“If the property tour skips the barn, roof, boundaries or defects, it is not a complete viewing.”</div></div>
-        <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Continuous walkthrough with every room and outbuilding</li><li>Roof, heating, windows, drainage and visible defects</li><li>Garden boundaries, neighbours, road and ambient noise</li><li>Exact language on septic or other compliance—not vague wording</li><li>Diagnostics and unresolved questions on screen</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Audience questions</span><ul class="detail-list"><li>Why was part of the property skipped?</li><li>Does the septic system conform or not?</li><li>What defects are visible?</li><li>Can I request another live walkthrough?</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">A video is screening material, not a survey or legal verification.</div></div>
-        <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">60 sec · English · All short-form platforms · Owner: Unassigned</div></div>
-        <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Ask Home France for a transparent, buyer-oriented property review.</div></div>
-        <div class="detail-row"><span class="detail-label">Source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=cBIXSaYxV0M" target="_blank" rel="noopener">Open source video ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 6</div><div class="content-card"><details><summary><div class="ctitle">When Renovation Costs More Than the Home Is Worth</div><div class="tags"><span class="tag en">English</span><span class="tag research">High Signal</span></div></summary><div class="brief-detail">
-        <div class="detail-row"><span class="detail-label">Objective</span><div class="detail-text">Separate lifestyle value from financial return in renovation decisions.</div></div>
-        <div class="detail-row"><span class="detail-label">Target audience</span><div class="detail-text">Foreign buyers considering barns, ruins and major renovation projects.</div></div>
-        <div class="detail-row"><span class="detail-label">Hook</span><div class="detail-text">“Would you spend €700,000 renovating a home later valued at €500,000?”</div></div>
-        <div class="detail-row"><span class="detail-label">Must cover</span><ul class="detail-list"><li>Purchase plus works plus contingency</li><li>Planning permission, trades, energy and timeline risks</li><li>Local resale ceiling and comparable properties</li><li>Lifestyle project versus investment project</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Audience questions</span><ul class="detail-list"><li>How much contingency is enough?</li><li>Will renovations add equal resale value?</li><li>Can I manage works from abroad?</li><li>When should I walk away?</li></ul></div>
-        <div class="detail-row"><span class="detail-label">Important nuance</span><div class="detail-text">The €700K/€500K example is a viewer’s personal comment, not a verified valuation case study. Use it only as the discussion hook.</div></div>
-        <div class="detail-row"><span class="detail-label">Production</span><div class="detail-text">60–75 sec · English · All short-form platforms · Owner: Unassigned</div></div>
-        <div class="detail-row"><span class="detail-label">CTA</span><div class="detail-text">Build the acquisition and renovation budget before falling in love with the project.</div></div>
-        <div class="detail-row"><span class="detail-label">Source</span><div class="detail-text"><a class="detail-source" href="https://www.youtube.com/watch?v=j0h8qe3QA5g" target="_blank" rel="noopener">Open source video ↗</a></div></div>
-      </div></details></div></div>
-
-      <div class="day"><div class="date">Sep 7</div></div><div class="day"><div class="date">Sep 8</div></div><div class="day"><div class="date">Sep 9</div></div><div class="day"><div class="date">Sep 10</div></div><div class="day"><div class="date">Sep 11</div></div><div class="day"><div class="date">Sep 12</div></div><div class="day"><div class="date">Sep 13</div></div>
-      <div class="day"><div class="date">Sep 14</div></div><div class="day"><div class="date">Sep 15</div></div><div class="day"><div class="date">Sep 16</div></div><div class="day"><div class="date">Sep 17</div></div><div class="day"><div class="date">Sep 18</div></div><div class="day"><div class="date">Sep 19</div></div><div class="day"><div class="date">Sep 20</div></div>
-      <div class="day"><div class="date">Sep 21</div></div><div class="day"><div class="date">Sep 22</div></div><div class="day"><div class="date">Sep 23</div></div><div class="day"><div class="date">Sep 24</div></div><div class="day"><div class="date">Sep 25</div></div><div class="day"><div class="date">Sep 26</div></div><div class="day"><div class="date">Sep 27</div></div>
-      <div class="day"><div class="date">Sep 28</div></div><div class="day"><div class="date">Sep 29</div></div><div class="day"><div class="date">Sep 30</div></div><div class="day muted"><div class="date">Oct 1</div></div><div class="day muted"><div class="date">Oct 2</div></div><div class="day muted"><div class="date">Oct 3</div></div><div class="day muted"><div class="date">Oct 4</div></div>
+<main class="shell">
+  <header class="header">
+    <div>
+      <div class="brand">HOME FRANCE</div>
+      <div class="subtitle">Content Dashboard</div>
     </div>
-  </div>
-</section>
+    <div class="updated">Last updated · 26 August 2026</div>
+  </header>
 
-<section class="panel research-brief">
-  <h3>Monday Intelligence · Telegram Intake Test</h3>
-  <div class="hint">4 YouTube links received · 26 August 2026 · public-page review · previous content dataset archived</div>
-  <div class="brief-grid">
-    <div class="brief-block"><b>Cheap-property listings</b><p><a class="brief-link" href="https://www.youtube.com/watch?v=1zD_FAIb-Cg" target="_blank" rel="noopener">DIRTH-CHEAP French PROPERTIES for Sale</a><br>2K views · 1 public comment visible. Main signal: “middle of nowhere” reinforces location and service-access risk.</p></div>
-    <div class="brief-block"><b>Buying remotely</b><p><a class="brief-link" href="https://www.youtube.com/watch?v=q2v3LPDQaGQ" target="_blank" rel="noopener">Buying a House in France? Here’s What You Need to Know</a><br>4.1K views · 11 comments. Questions surfaced around asbestos roofs, legal cover and buying via Zoom without visiting.</p></div>
-    <div class="brief-block"><b>Region selection</b><p><a class="brief-link" href="https://www.youtube.com/watch?v=j0h8qe3QA5g" target="_blank" rel="noopener">Top French Regions YOU Should Consider Living in NOW</a><br>201K views · 936 comments. Strongest cluster: healthcare access, transport, services, climate, trial stays and local impact.</p></div>
-    <div class="brief-block"><b>Property-tour standard</b><p><a class="brief-link" href="https://www.youtube.com/watch?v=cBIXSaYxV0M" target="_blank" rel="noopener">Renovated Haute-Vienne Stone Cottage</a><br>3.2K views · 13 comments. Viewers explicitly request complete tours and precise compliance language.</p></div>
-  </div>
-  <div class="hint" style="margin:12px 0 0">Comment note: this is a manual sample of comments visible on the public YouTube pages, not a complete API export. No transcript was available for these four pages during intake.</div>
-</section>
+  <div class="preview">Design preview · Proposal examples are shown only to review the new dashboard structure.</div>
 
-<div class="grid">
-<section class="panel"><h3>Weekly Discussion Topics</h3><div class="hint">Meeting agenda generated only from the new intake and verified event opportunities.</div>
-<div class="topic"><div class="num">1</div><div><b>Define “cheap” using total ownership cost</b><p>Should Home France publish a repeatable bargain-check framework?</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">2</div><div><b>Create a buyer-first video-tour checklist</b><p>Audience asks for complete rooms, barns, boundaries, defects and unambiguous compliance wording.</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">3</div><div><b>Remote purchase: where video stops</b><p>Decide how to explain Zoom viewing, independent inspection and notaire verification.</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">4</div><div><b>Location matching beyond property price</b><p>Healthcare, transport, services, climate and ordinary daily life dominate the region discussion.</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">5</div><div><b>Foreign buyers and local communities</b><p>High-engagement comments raise vacant second homes, affordability pressure and learning French.</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">6</div><div><b>Renovation: lifestyle value vs resale value</b><p>Set a clear editorial distinction between a dream project and an investment case.</p></div><span class="priority">HIGH</span></div>
-<div class="topic"><div class="num">7</div><div><b>September field-content assignments</b><p>Choose who can film Strasbourg heritage/street art, Cannes Yachting and Nice/Paris opportunities.</p></div><span class="priority">HIGH</span></div>
-</section>
-<section class="panel"><h3>Upcoming Opportunities</h3><div class="hint">Official calendars · preparation deadline and usable Home France angle included.</div>
-<div class="event"><b>COLORS Urban Art Festival · Strasbourg · 4–20 Sep</b><span>Prepare by 31 Aug · film neighbourhood character and city lifestyle · Status: monitor/assign.</span></div>
-<div class="event"><b>European Heritage Days · Strasbourg · 19–20 Sep</b><span>Prepare by 7 Sep · normally closed heritage sites + “living among history” property angle · Status: plan.</span></div>
-<div class="event"><b>Cannes Yachting Festival · Cannes · 8–13 Sep</b><span>Prepare immediately · international buyers, luxury lifestyle and second-home context · Status: priority.</span></div>
-<div class="event"><b>Beaulieu Classic Festival · Côte d’Azur · 12–19 Sep</b><span>Prepare by 4 Sep · local lifestyle/location storytelling · Status: optional.</span></div>
-<div class="event"><b>International Gastronomy Village · Paris · 10–13 Sep</b><span>Prepare by 3 Sep · international community and Paris lifestyle · Status: optional.</span></div>
-<div class="event"><b>Paris Fashion Week · Paris · 28 Sep–6 Oct</b><span>Prepare by 14 Sep · international visibility, neighbourhood/luxury market angle · Status: monitor.</span></div>
-</section>
-</div>
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Proposal Subjects</h2>
+      <span class="count">6 / 100</span>
+    </div>
+    <div class="section-note">Topics for team discussion. Nothing enters the calendar automatically.</div>
 
-<div class="bottom">
-<section class="panel"><h3>Top Audience Questions</h3><div class="hint">Ranked from repeated or high-engagement signals in the new sources.</div>
-<div class="question"><b>How do I know whether a cheap French house is actually liveable?</b><span>Total cost · renovation · diagnostics · very high content value</span></div>
-<div class="question"><b>Can I safely buy a French property using only Zoom or video?</b><span>Remote buyers · inspection and legal-process concern</span></div>
-<div class="question"><b>How can I check access to doctors before choosing a rural area?</b><span>Repeated/high-engagement region concern</span></div>
-<div class="question"><b>What must a complete French property video tour show?</b><span>Rooms · outbuildings · boundaries · defects · compliance</span></div>
-<div class="question"><b>Does an asbestos roof automatically mean I should walk away?</b><span>Specific buyer question · requires diagnostics and cost context</span></div>
-<div class="question"><b>Should I rent in a region before buying there?</b><span>Repeated advice · climate, community and daily-life test</span></div>
-<div class="question"><b>Will renovation spending come back in the resale value?</b><span>Renovation buyers · investment-versus-lifestyle decision</span></div>
-</section>
-</div>
-<div style="margin-top:16px;text-align:center;color:var(--muted);font-size:9px">Phase A prototype · Static interface today · Dynamic data and AI connections are a future development phase.</div>
+    <div class="proposal-list">
+      <article class="proposal urgent">
+        <div class="code">H1</div>
+        <div>
+          <div class="subject">Is a €20K French house really a bargain?</div>
+          <div class="source">Source: YouTube video received 26 August 2026 · Transcript</div>
+        </div>
+        <div class="badges"><span class="badge urgent">URGENT</span></div>
+      </article>
+
+      <article class="proposal">
+        <div class="code">H2</div>
+        <div>
+          <div class="subject">Can I safely buy a French property using only Zoom or video?</div>
+          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
+        </div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+      </article>
+
+      <article class="proposal">
+        <div class="code">H3</div>
+        <div>
+          <div class="subject">How can I check access to doctors before choosing a rural area?</div>
+          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
+        </div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+      </article>
+
+      <article class="proposal">
+        <div class="code">H4</div>
+        <div>
+          <div class="subject">What must a complete French property video tour show?</div>
+          <div class="source">Source: Audience comments on YouTube video received 26 August 2026</div>
+        </div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+      </article>
+
+      <article class="proposal">
+        <div class="code">H5</div>
+        <div>
+          <div class="subject">Should I rent in a French region before buying there?</div>
+          <div class="source">Source: YouTube video received 26 August 2026 · Audience discussion</div>
+        </div>
+        <div class="badges"><span class="badge audience">AUDIENCE PRIORITY</span></div>
+      </article>
+
+      <article class="proposal">
+        <div class="code">H6</div>
+        <div>
+          <div class="subject">When can renovation cost more than the finished home is worth?</div>
+          <div class="source">Source: YouTube video received 26 August 2026 · Research proposal</div>
+        </div>
+        <div class="badges"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Approved Calendar</h2>
+      <span class="count">0 scheduled</span>
+    </div>
+    <div class="section-note">Only team-approved content with an explicit date appears here.</div>
+    <div class="calendar-list">
+      <div class="empty-title">No content has been scheduled yet.</div>
+      <div class="empty-text">A proposal will move here only after you or an authorised team member gives a calendar instruction.</div>
+      <div class="instruction">Example: Add H2 to 12 September.</div>
+    </div>
+  </section>
+
+  <div class="footer">Proposal decisions remain with the Home France team.</div>
 </main>
-</div>
 </body>
 </html>
