@@ -15,7 +15,7 @@ create policy calendar_insert on public.calendar_items for insert to authenticat
 create policy events_select on public.upcoming_events for select to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal');
 create policy events_insert on public.upcoming_events for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
 create policy events_update on public.upcoming_events for update to authenticated using((select auth.jwt()->>'email')='dashboard@homefrance.internal') with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
-create policy notes_insert on public.notes for insert to authenticated with check((select auth.jwt()->>'email')='dashboard@homefrance.internal');
+create policy notes_insert on public.notes for insert to authenticated with check(((select auth.jwt())->>'email')='dashboard@homefrance.internal' and source='dashboard' and status='new' and processed_at is null);
 create or replace function public.schedule_proposal(p_proposal_id uuid,p_scheduled_date date,p_platform text)returns void language plpgsql security invoker set search_path='' as $$
 declare p public.proposals;
 begin select*into p from public.proposals where id=p_proposal_id and scheduled_at is null for update;if not found then raise exception'Proposal unavailable';end if;
