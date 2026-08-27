@@ -35,17 +35,20 @@ async function downloadAndClearInbox(){
   toast("Preparing your inbox file…");
   const zip=new JSZip();
   const manifest={exported_at:new Date().toISOString(),items:inbox.map(x=>({source:x.source||"dashboard_note",id:x.id,type:x.message_type||"note",sender:x.sender_name||"Home France team",received_at:x.created_at,text:x.body||null,media_file:x.media_path?"media/"+(x.source||"note")+"-"+x.id+"."+fileExtension(x):null}))};
-  zip.file("inbox.json",JSON.stringify(manifest,null,2));
+  const downloadedMediaPaths=[];
   for(const item of inbox.filter(x=>x.source==="telegram"&&x.media_path)){
    const {data,error}=await db.storage.from("telegram-raw").download(item.media_path);
-   if(error)throw new Error("Could not download a Telegram file: "+error.message);
-   zip.file("media/telegram-"+item.id+"."+fileExtension(item),data);
+   if(error){
+    const entry=manifest.items.find(x=>x.id===item.id);if(entry){entry.media_file=null;entry.media_status="missing_from_storage";}
+    continue;
+   }
+   zip.file("media/telegram-"+item.id+"."+fileExtension(item),data);downloadedMediaPaths.push(item.media_path);
   }
+  zip.file("inbox.json",JSON.stringify(manifest,null,2));
   const blob=await zip.generateAsync({type:"blob",compression:"DEFLATE"});
   const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="home-france-inbox-"+new Date().toISOString().slice(0,10)+".zip";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
   const noteIds=inbox.filter(x=>x.source!=="telegram").map(x=>x.id),telegramIds=inbox.filter(x=>x.source==="telegram").map(x=>x.id);
-  const mediaPaths=inbox.filter(x=>x.source==="telegram"&&x.media_path).map(x=>x.media_path);
-  if(mediaPaths.length){const {error}=await db.storage.from("telegram-raw").remove(mediaPaths);if(error)throw error;}
+  if(downloadedMediaPaths.length){const {error}=await db.storage.from("telegram-raw").remove(downloadedMediaPaths);if(error)throw error;}
   const deletes=[];
   if(noteIds.length)deletes.push(db.from("notes").delete().in("id",noteIds));
   if(telegramIds.length)deletes.push(db.from("telegram_messages").delete().in("id",telegramIds));
