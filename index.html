@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><title>Home France Content Dashboard</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-inbox-download">
+  <link rel="stylesheet" href="styles.css?v=20260827-simple">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
 <div id="login" class="overlay"><form id="loginForm" class="card login-card">
@@ -16,24 +15,15 @@
 </form></div>
 <main id="app" class="shell hidden">
   <header><div><img src="home-france-logo.png" alt="Home France"><small>Content Dashboard</small></div>
-    <div class="actions"><span id="updated"></span><button id="notifications" class="btn notification-btn">Notification Center <span id="inboxCount">0</span></button><button id="changePassword" class="btn pale">Change password</button><button id="logout" class="btn pale">Log out</button></div>
+    <div class="actions"><span id="updated"></span><button id="changePassword" class="btn pale">Change password</button><button id="logout" class="btn pale">Log out</button></div>
   </header>
   <section class="card"><div class="heading"><h2>Proposal Subjects</h2><b id="proposalCount">0 / 100</b></div>
-    <p class="hint">Choose a date to move an approved proposal into the calendar.</p><div id="proposals" class="list"></div></section>
+    <p class="hint">Social-media video links sent through Telegram appear here automatically. Open the source when you want to review it, then add approved ideas to the calendar.</p><div id="proposals" class="list"></div></section>
   <section class="card"><div class="heading"><h2>Upcoming Events</h2><b id="eventCount">0 verified</b></div>
     <p class="hint">Verified opportunities that may become Proposal Subjects.</p><div id="events" class="events"></div></section>
   <section class="card"><div class="heading"><h2>Approved Calendar</h2><b id="calendarCount">0 scheduled</b></div>
     <p class="hint">Current and next month remain visible even when empty.</p><div id="calendars"></div></section>
-  <section class="card"><div class="heading"><h2>Send a Note</h2><b>Private message</b></div>
-    <p class="hint">Send a private instruction to the Home France assistant.</p>
-    <form id="noteForm"><textarea id="noteText" maxlength="2000" placeholder="Write your message…" required></textarea><button class="btn">Send note</button></form>
-  </section>
 </main>
-<div id="inboxModal" class="overlay hidden"><section class="card modal inbox-modal"><div class="heading"><h2>Notification Center</h2><b id="inboxTotal">0 waiting</b></div>
-  <p class="hint">Dashboard notes and Telegram messages waiting for our next review session.</p>
-  <div id="inboxItems" class="inbox-list"></div>
-  <div class="actions inbox-actions"><button id="refreshInbox" type="button" class="btn pale">Refresh</button><button id="downloadInbox" type="button" class="btn">Download &amp; clear inbox</button><button id="closeInbox" type="button" class="btn pale">Close</button></div>
-</section></div>
 <div id="scheduleModal" class="overlay hidden"><form id="scheduleForm" class="card modal"><h2>Add to Calendar</h2><p id="scheduleSubject"></p>
   <label>Publication date<input id="scheduleDate" type="date" required></label>
   <label>Platform<select id="platform"><option>Instagram + YouTube</option><option>Instagram</option><option>YouTube</option><option>TikTok</option><option>Website</option></select></label>
@@ -41,5 +31,5 @@
 <div id="passwordModal" class="overlay hidden"><form id="passwordForm" class="card modal"><h2>Change shared password</h2>
   <label>New password<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></label>
   <div class="actions"><button id="cancelPassword" type="button" class="btn pale">Cancel</button><button class="btn">Update</button></div></form></div>
-<div id="toast" class="toast hidden"></div><script src="app.js?v=20260827-inbox-download"></script>
+<div id="toast" class="toast hidden"></div><script src="app.js?v=20260827-simple"></script>
 </body></html>
