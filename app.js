@@ -48,7 +48,13 @@ async function downloadAndClearInbox(){
   if(noteIds.length)updates.push(db.from("notes").update({status:"done",processed_at}).in("id",noteIds));
   if(telegramIds.length)updates.push(db.from("telegram_messages").update({status:"done",processed_at}).in("id",telegramIds));
   const results=await Promise.all(updates);const failed=results.find(x=>x.error);if(failed)throw failed.error;
-  await loadInbox();toast("Inbox downloaded and cleared");
+  const mediaPaths=inbox.filter(x=>x.source==="telegram"&&x.media_path).map(x=>x.media_path);
+  if(mediaPaths.length){const {error}=await db.storage.from("telegram-raw").remove(mediaPaths);if(error)throw error;}
+  const deletes=[];
+  if(noteIds.length)deletes.push(db.from("notes").delete().in("id",noteIds));
+  if(telegramIds.length)deletes.push(db.from("telegram_messages").delete().in("id",telegramIds));
+  const deleted=await Promise.all(deletes);const deleteFailed=deleted.find(x=>x.error);if(deleteFailed)throw deleteFailed.error;
+  await loadInbox();toast("Inbox downloaded and permanently cleared");
  }catch(error){toast(error.message||"Could not prepare the inbox file")}finally{button.disabled=false}
 }
 function renderProposals(){
