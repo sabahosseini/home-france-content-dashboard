@@ -1,6 +1,6 @@
 const CONFIG={url:"https://jiupaabevawvnpwyjvjx.supabase.co",key:"sb_publishable_gOi9DT7HpLMZsR7w4uI0wA_S72AjUad",email:"dashboard@homefrance.internal"};
 const db=supabase.createClient(CONFIG.url,CONFIG.key),$=id=>document.getElementById(id);
-let proposals=[],calendar=[],events=[],notes=[],selected;
+let proposals=[],calendar=[],events=[],selected;
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 const months=["January","February","March","April","May","June","July","August","September","October","November","December"],weekdays=["MON","TUE","WED","THU","FRI","SAT","SUN"];
 function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2400)}
@@ -22,20 +22,16 @@ function month(year,mo){
  return `<div class="calendar"><div class="calendar-title">${months[mo]} ${year}</div><div class="week">${weekdays.map(x=>`<div class="weekday">${x}</div>`).join("")}</div><div class="days">${cells}</div></div>`;
 }
 function renderCalendar(){const n=new Date(),next=new Date(n.getFullYear(),n.getMonth()+1,1);$("calendarCount").textContent=`${calendar.length} scheduled`;$("calendars").innerHTML=month(n.getFullYear(),n.getMonth())+month(next.getFullYear(),next.getMonth())}
-function renderNotes(){
- $("notes").innerHTML=notes.length?notes.map(n=>`<article class="note"><time>${new Date(n.created_at).toLocaleString("en-GB")}</time><p>${esc(n.note_text)}</p><button class="btn pale copy" data-id="${n.id}">Copy for ChatGPT</button></article>`).join(""):'<div class="empty">No notes yet.</div>';
- document.querySelectorAll(".copy").forEach(b=>b.onclick=async()=>{const n=notes.find(x=>x.id===b.dataset.id);await navigator.clipboard.writeText(n.note_text);toast("Note copied")});
-}
 async function load(){
- const [p,c,e,n]=await Promise.all([db.from("proposals").select("*").is("scheduled_at",null).order("is_urgent",{ascending:false}).order("created_at",{ascending:false}),db.from("calendar_items").select("*").order("scheduled_date"),db.from("upcoming_events").select("*").order("starts_on"),db.from("notes").select("*").order("created_at",{ascending:false}).limit(30)]);
- const error=p.error||c.error||e.error||n.error;if(error)throw error;[proposals,calendar,events,notes]=[p.data,c.data,e.data,n.data];renderProposals();renderEvents();renderCalendar();renderNotes();$("updated").textContent=`Updated · ${new Date().toLocaleDateString("en-GB")}`;
+ const [p,c,e]=await Promise.all([db.from("proposals").select("*").is("scheduled_at",null).order("is_urgent",{ascending:false}).order("created_at",{ascending:false}),db.from("calendar_items").select("*").order("scheduled_date"),db.from("upcoming_events").select("*").order("starts_on")]);
+ const error=p.error||c.error||e.error;if(error)throw error;[proposals,calendar,events]=[p.data,c.data,e.data];renderProposals();renderEvents();renderCalendar();$("updated").textContent=`Updated · ${new Date().toLocaleDateString("en-GB")}`;
 }
 function openSchedule(id){selected=proposals.find(x=>x.id===id);$("scheduleSubject").textContent=`${selected.code} · ${selected.subject}`;$("scheduleDate").min=new Date().toISOString().slice(0,10);$("scheduleModal").classList.remove("hidden")}
 $("loginForm").onsubmit=async e=>{e.preventDefault();$("loginError").textContent="";const {error}=await db.auth.signInWithPassword({email:CONFIG.email,password:$("password").value});if(error){$("loginError").textContent="Incorrect password or account not configured.";return}signedIn(true);await load()};
 $("logout").onclick=async()=>{await db.auth.signOut();signedIn(false)};
 $("scheduleForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.rpc("schedule_proposal",{p_proposal_id:selected.id,p_scheduled_date:$("scheduleDate").value,p_platform:$("platform").value});if(error)return toast(error.message);$("scheduleModal").classList.add("hidden");await load();toast(`${selected.code} scheduled`)};
 $("cancelSchedule").onclick=()=>$("scheduleModal").classList.add("hidden");
-$("noteForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.from("notes").insert({note_text:$("noteText").value.trim()});if(error)return toast(error.message);$("noteText").value="";await load();toast("Note saved")};
+$("noteForm").onsubmit=async e=>{e.preventDefault();const message=$("noteText").value.trim();if(!message)return;const button=e.submitter;button.disabled=true;const {error}=await db.from("notes").insert({note_text:message});button.disabled=false;if(error)return toast(error.message);$("noteText").value="";toast("Note sent")};
 $("changePassword").onclick=()=>$("passwordModal").classList.remove("hidden");$("cancelPassword").onclick=()=>$("passwordModal").classList.add("hidden");
 $("passwordForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.auth.updateUser({password:$("newPassword").value});if(error)return toast(error.message);$("newPassword").value="";$("passwordModal").classList.add("hidden");toast("Password updated")};
 (async()=>{if(CONFIG.key.startsWith("REPLACE_"))return $("loginError").textContent="Supabase configuration is pending.";const {data}=await db.auth.getSession();if(data.session){signedIn(true);try{await load()}catch(e){toast(e.message)}}})();
