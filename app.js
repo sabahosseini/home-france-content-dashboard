@@ -8,12 +8,13 @@ function signedIn(v){$("login").classList.toggle("hidden",v);$("app").classList.
 function more(x){return `<details><summary>See more</summary><div class="more"><b>Must cover</b><ul>${(x.must_cover||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>${x.source_url?`<a href="${esc(x.source_url)}" target="_blank" rel="noopener">Open source ↗</a>`:""}</div></details>`}
 function renderProposals(){
  $("proposalCount").textContent=`${proposals.length} / 100`;
- $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule" data-id="${p.id}">Add to Calendar</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
- document.querySelectorAll(".schedule").forEach(b=>b.onclick=()=>openSchedule(b.dataset.id));
+ $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule-proposal" data-id="${p.id}">Add to Calendar</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
+ document.querySelectorAll(".schedule-proposal").forEach(b=>b.onclick=()=>openSchedule("proposal",b.dataset.id));
 }
 function renderEvents(){
  $("eventCount").textContent=`${events.length} verified`;
- $("events").innerHTML=events.length?events.map(e=>`<article class="event"><div class="event-date">${esc(e.date_label)}</div><div class="event-title">${esc(e.title)}</div><div class="event-place">${esc(e.place)}</div><div class="event-angle">${esc(e.content_angle)}</div>${e.source_url?`<a href="${esc(e.source_url)}" target="_blank" rel="noopener">Official source ↗</a>`:""}</article>`).join(""):'<div class="empty">No upcoming events.</div>';
+ $("events").innerHTML=events.length?events.map(e=>`<article class="event"><div class="event-date">${esc(e.date_label)}</div><div class="event-title">${esc(e.title)}</div><div class="event-place">${esc(e.place)}</div><div class="event-angle">${esc(e.content_angle)}</div>${e.source_url?`<a href="${esc(e.source_url)}" target="_blank" rel="noopener">Official source ↗</a>`:""}<div class="row-actions"><button class="btn schedule-event" data-id="${e.id}">Add to Calendar</button></div></article>`).join(""):'<div class="empty">No upcoming events.</div>';
+ document.querySelectorAll(".schedule-event").forEach(b=>b.onclick=()=>openSchedule("event",b.dataset.id));
 }
 function month(year,mo){
  const first=(new Date(year,mo,1).getDay()+6)%7,total=new Date(year,mo+1,0).getDate(),now=new Date();let cells="";
@@ -26,10 +27,30 @@ async function load(){
  const [p,c,e]=await Promise.all([db.from("proposals").select("*").is("scheduled_at",null).order("is_urgent",{ascending:false}).order("created_at",{ascending:false}),db.from("calendar_items").select("*").order("scheduled_date"),db.from("upcoming_events").select("*").order("starts_on")]);
  const error=p.error||c.error||e.error;if(error)throw error;[proposals,calendar,events]=[p.data,c.data,e.data];renderProposals();renderEvents();renderCalendar();$("updated").textContent=`Updated · ${new Date().toLocaleDateString("en-GB")}`;
 }
-function openSchedule(id){selected=proposals.find(x=>x.id===id);$("scheduleSubject").textContent=`${selected.code} · ${selected.subject}`;$("scheduleDate").min=new Date().toISOString().slice(0,10);$("scheduleModal").classList.remove("hidden")}
+function openSchedule(type,id){
+ const item=type==="event"?events.find(x=>x.id===id):proposals.find(x=>x.id===id);
+ selected={type,item};
+ $("scheduleSubject").textContent=type==="event"?`Event · ${item.title}`:`${item.code} · ${item.subject}`;
+ $("scheduleDate").min=new Date().toISOString().slice(0,10);
+ if(type==="event"&&item.starts_on&&item.starts_on>=$("scheduleDate").min)$("scheduleDate").value=item.starts_on;else $("scheduleDate").value="";
+ $("scheduleModal").classList.remove("hidden");
+}
 $("loginForm").onsubmit=async e=>{e.preventDefault();$("loginError").textContent="";const {error}=await db.auth.signInWithPassword({email:CONFIG.email,password:$("password").value});if(error){$("loginError").textContent="Incorrect password or account not configured.";return}signedIn(true);await load()};
 $("logout").onclick=async()=>{await db.auth.signOut();signedIn(false)};
-$("scheduleForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.rpc("schedule_proposal",{p_proposal_id:selected.id,p_scheduled_date:$("scheduleDate").value,p_platform:$("platform").value});if(error)return toast(error.message);$("scheduleModal").classList.add("hidden");await load();toast(`${selected.code} scheduled`)};
+$("scheduleForm").onsubmit=async e=>{
+ e.preventDefault();
+ const date=$("scheduleDate").value,platform=$("platform").value;
+ let error;
+ if(selected.type==="proposal"){
+  ({error}=await db.rpc("schedule_proposal",{p_proposal_id:selected.item.id,p_scheduled_date:date,p_platform:platform}));
+ }else{
+  const ev=selected.item,fa=/[؀-ۿ]/.test(ev.title||"");
+  ({error}=await db.from("calendar_items").insert({proposal_id:null,event_id:ev.id,code:"EVENT",subject:ev.title,language:fa?"fa":"en",must_cover:[ev.content_angle,ev.place?`Place: ${ev.place}`:null,ev.date_label?`Event date: ${ev.date_label}`:null].filter(Boolean),source_url:ev.source_url||null,scheduled_date:date,platform}));
+ }
+ if(error)return toast(error.message);
+ const label=selected.type==="event"?selected.item.title:selected.item.code;
+ $("scheduleModal").classList.add("hidden");await load();toast(`${label} scheduled`);
+};
 $("cancelSchedule").onclick=()=>$("scheduleModal").classList.add("hidden");
 $("changePassword").onclick=()=>$("passwordModal").classList.remove("hidden");$("cancelPassword").onclick=()=>$("passwordModal").classList.add("hidden");
 $("passwordForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.auth.updateUser({password:$("newPassword").value});if(error)return toast(error.message);$("newPassword").value="";$("passwordModal").classList.add("hidden");toast("Password updated")};
