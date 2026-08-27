@@ -8,14 +8,20 @@ function signedIn(v){$("login").classList.toggle("hidden",v);$("app").classList.
 function more(x){return `<details><summary>See more</summary><div class="more"><b>Must cover</b><ul>${(x.must_cover||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>${x.source_url?`<a href="${esc(x.source_url)}" target="_blank" rel="noopener">Open source ↗</a>`:""}</div></details>`}
 function renderProposals(){
  $("proposalCount").textContent=`${proposals.length} / 100`;
- $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule-proposal" data-id="${p.id}">Add to Calendar</button><button class="btn pale urgent-toggle" data-id="${p.id}" data-urgent="${p.is_urgent}">${p.is_urgent?"Remove Urgent":"Urgent"}</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
+ $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule-proposal" data-id="${p.id}">Add to Calendar</button><button class="btn pale urgent-toggle" data-id="${p.id}" data-urgent="${p.is_urgent}">${p.is_urgent?"Remove Urgent":"Urgent"}</button><button class="btn pale audience-toggle" data-id="${p.id}" data-audience="${p.is_audience_priority}">${p.is_audience_priority?"Remove Audience Priority":"Audience Priority"}</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
  document.querySelectorAll(".schedule-proposal").forEach(b=>b.onclick=()=>openSchedule("proposal",b.dataset.id));
  document.querySelectorAll(".urgent-toggle").forEach(b=>b.onclick=()=>toggleUrgent(b.dataset.id,b.dataset.urgent!=="true"));
+ document.querySelectorAll(".audience-toggle").forEach(b=>b.onclick=()=>toggleAudiencePriority(b.dataset.id,b.dataset.audience!=="true"));
 }
 async function toggleUrgent(id,value){
  const {error}=await db.from("proposals").update({is_urgent:value}).eq("id",id);
  if(error)return toast(error.message);
  await load();toast(value?"Marked urgent — moved to priority":"Urgent removed");
+}
+async function toggleAudiencePriority(id,value){
+ const {error}=await db.from("proposals").update({is_audience_priority:value}).eq("id",id);
+ if(error)return toast(error.message);
+ await load();toast(value?"Marked audience priority — moved to priority":"Audience priority removed");
 }
 function renderEvents(){
  $("eventCount").textContent=`${events.length} verified`;
@@ -30,7 +36,7 @@ function month(year,mo){
 }
 function renderCalendar(){const n=new Date(),next=new Date(n.getFullYear(),n.getMonth()+1,1);$("calendarCount").textContent=`${calendar.length} scheduled`;$("calendars").innerHTML=month(n.getFullYear(),n.getMonth())+month(next.getFullYear(),next.getMonth())}
 async function load(){
- const [p,c,e]=await Promise.all([db.from("proposals").select("*").is("scheduled_at",null).order("is_urgent",{ascending:false}).order("created_at",{ascending:false}),db.from("calendar_items").select("*").order("scheduled_date"),db.from("upcoming_events").select("*").order("starts_on")]);
+ const [p,c,e]=await Promise.all([db.from("proposals").select("*").is("scheduled_at",null).order("is_urgent",{ascending:false}).order("is_audience_priority",{ascending:false}).order("created_at",{ascending:false}),db.from("calendar_items").select("*").order("scheduled_date"),db.from("upcoming_events").select("*").order("starts_on")]);
  const error=p.error||c.error||e.error;if(error)throw error;[proposals,calendar,events]=[p.data,c.data,e.data];renderProposals();renderEvents();renderCalendar();$("updated").textContent=`Updated · ${new Date().toLocaleDateString("en-GB")}`;
 }
 function openSchedule(type,id){
