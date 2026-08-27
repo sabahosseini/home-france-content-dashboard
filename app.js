@@ -8,8 +8,14 @@ function signedIn(v){$("login").classList.toggle("hidden",v);$("app").classList.
 function more(x){return `<details><summary>See more</summary><div class="more"><b>Must cover</b><ul>${(x.must_cover||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>${x.source_url?`<a href="${esc(x.source_url)}" target="_blank" rel="noopener">Open source ↗</a>`:""}</div></details>`}
 function renderProposals(){
  $("proposalCount").textContent=`${proposals.length} / 100`;
- $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule-proposal" data-id="${p.id}">Add to Calendar</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
+ $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule-proposal" data-id="${p.id}">Add to Calendar</button><button class="btn pale urgent-toggle" data-id="${p.id}" data-urgent="${p.is_urgent}">${p.is_urgent?"Remove Urgent":"Urgent"}</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
  document.querySelectorAll(".schedule-proposal").forEach(b=>b.onclick=()=>openSchedule("proposal",b.dataset.id));
+ document.querySelectorAll(".urgent-toggle").forEach(b=>b.onclick=()=>toggleUrgent(b.dataset.id,b.dataset.urgent!=="true"));
+}
+async function toggleUrgent(id,value){
+ const {error}=await db.from("proposals").update({is_urgent:value}).eq("id",id);
+ if(error)return toast(error.message);
+ await load();toast(value?"Marked urgent — moved to priority":"Urgent removed");
 }
 function renderEvents(){
  $("eventCount").textContent=`${events.length} verified`;
