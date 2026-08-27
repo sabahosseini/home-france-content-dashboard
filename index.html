@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><title>Home France Content Dashboard</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-notification-center">
+  <link rel="stylesheet" href="styles.css?v=20260827-inbox-download">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
 <div id="login" class="overlay"><form id="loginForm" class="card login-card">
@@ -31,7 +32,7 @@
 <div id="inboxModal" class="overlay hidden"><section class="card modal inbox-modal"><div class="heading"><h2>Notification Center</h2><b id="inboxTotal">0 waiting</b></div>
   <p class="hint">Dashboard notes and Telegram messages waiting for our next review session.</p>
   <div id="inboxItems" class="inbox-list"></div>
-  <div class="actions inbox-actions"><button id="refreshInbox" type="button" class="btn pale">Refresh</button><button id="closeInbox" type="button" class="btn">Close</button></div>
+  <div class="actions inbox-actions"><button id="refreshInbox" type="button" class="btn pale">Refresh</button><button id="downloadInbox" type="button" class="btn">Download &amp; clear inbox</button><button id="closeInbox" type="button" class="btn pale">Close</button></div>
 </section></div>
 <div id="scheduleModal" class="overlay hidden"><form id="scheduleForm" class="card modal"><h2>Add to Calendar</h2><p id="scheduleSubject"></p>
   <label>Publication date<input id="scheduleDate" type="date" required></label>
@@ -40,5 +41,5 @@
 <div id="passwordModal" class="overlay hidden"><form id="passwordForm" class="card modal"><h2>Change shared password</h2>
   <label>New password<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></label>
   <div class="actions"><button id="cancelPassword" type="button" class="btn pale">Cancel</button><button class="btn">Update</button></div></form></div>
-<div id="toast" class="toast hidden"></div><script src="app.js?v=20260827-notification-center"></script>
+<div id="toast" class="toast hidden"></div><script src="app.js?v=20260827-inbox-download"></script>
 </body></html>
