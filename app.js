@@ -24,6 +24,33 @@ async function loadInbox(){
  ].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
  renderInbox();
 }
+function fileExtension(item){
+ const mime=String(item.mime_type||"");
+ if(mime.includes("ogg"))return"ogg";if(mime.includes("mpeg"))return"mp3";if(mime.includes("mp4"))return"mp4";if(mime.includes("wav"))return"wav";if(mime.includes("jpeg"))return"jpg";if(mime.includes("png"))return"png";if(mime.includes("pdf"))return"pdf";return"bin";
+}
+async function downloadAndClearInbox(){
+ if(!inbox.length)return toast("Inbox is already clear");
+ const button=$("downloadInbox");button.disabled=true;
+ try{
+  toast("Preparing your inbox file…");
+  const zip=new JSZip();
+  const manifest={exported_at:new Date().toISOString(),items:inbox.map(x=>({source:x.source||"dashboard_note",id:x.id,type:x.message_type||"note",sender:x.sender_name||"Home France team",received_at:x.created_at,text:x.body||null,media_file:x.media_path?"media/"+(x.source||"note")+"-"+x.id+"."+fileExtension(x):null}))};
+  zip.file("inbox.json",JSON.stringify(manifest,null,2));
+  for(const item of inbox.filter(x=>x.source==="telegram"&&x.media_path)){
+   const {data,error}=await db.storage.from("telegram-raw").download(item.media_path);
+   if(error)throw new Error("Could not download a Telegram file: "+error.message);
+   zip.file("media/telegram-"+item.id+"."+fileExtension(item),data);
+  }
+  const blob=await zip.generateAsync({type:"blob",compression:"DEFLATE"});
+  const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="home-france-inbox-"+new Date().toISOString().slice(0,10)+".zip";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+  const noteIds=inbox.filter(x=>x.source!=="telegram").map(x=>x.id),telegramIds=inbox.filter(x=>x.source==="telegram").map(x=>x.id),processed_at=new Date().toISOString();
+  const updates=[];
+  if(noteIds.length)updates.push(db.from("notes").update({status:"done",processed_at}).in("id",noteIds));
+  if(telegramIds.length)updates.push(db.from("telegram_messages").update({status:"done",processed_at}).in("id",telegramIds));
+  const results=await Promise.all(updates);const failed=results.find(x=>x.error);if(failed)throw failed.error;
+  await loadInbox();toast("Inbox downloaded and cleared");
+ }catch(error){toast(error.message||"Could not prepare the inbox file")}finally{button.disabled=false}
+}
 function renderProposals(){
  $("proposalCount").textContent=`${proposals.length} / 100`;
  $("proposals").innerHTML=proposals.length?proposals.map(p=>`<article class="proposal ${p.is_urgent?"urgent":""}"><div class="code">${esc(p.code)}</div><div class="${p.language==="fa"?"fa":""}"><div class="subject">${esc(p.subject)}</div><div class="source">${esc(p.source_label)}</div></div><div class="badges">${p.is_urgent?'<span class="badge urgent-b">URGENT</span>':""}${p.is_audience_priority?'<span class="badge audience">AUDIENCE PRIORITY</span>':""}<span class="badge language">${p.language==="fa"?"فارسی":"ENGLISH"}</span></div>${more(p)}<div class="row-actions"><button class="btn schedule" data-id="${p.id}">Add to Calendar</button></div></article>`).join(""):'<div class="empty">No active proposals.</div>';
@@ -50,7 +77,7 @@ $("logout").onclick=async()=>{await db.auth.signOut();signedIn(false)};
 $("scheduleForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.rpc("schedule_proposal",{p_proposal_id:selected.id,p_scheduled_date:$("scheduleDate").value,p_platform:$("platform").value});if(error)return toast(error.message);$("scheduleModal").classList.add("hidden");await load();toast(`${selected.code} scheduled`)};
 $("cancelSchedule").onclick=()=>$("scheduleModal").classList.add("hidden");
 $("noteForm").onsubmit=async e=>{e.preventDefault();const message=$("noteText").value.trim();if(!message)return;const button=e.submitter;button.disabled=true;const {error}=await db.from("notes").insert({note_text:message});button.disabled=false;if(error)return toast(error.message);$("noteText").value="";await loadInbox();toast("Note sent to Notification Center")};
-$("notifications").onclick=async()=>{try{await loadInbox();$("inboxModal").classList.remove("hidden")}catch(e){toast(e.message)}};$("closeInbox").onclick=()=>$("inboxModal").classList.add("hidden");$("refreshInbox").onclick=async()=>{try{await loadInbox();toast("Inbox refreshed")}catch(e){toast(e.message)}};
+$("notifications").onclick=async()=>{try{await loadInbox();$("inboxModal").classList.remove("hidden")}catch(e){toast(e.message)}};$("downloadInbox").onclick=downloadAndClearInbox;$("closeInbox").onclick=()=>$("inboxModal").classList.add("hidden");$("refreshInbox").onclick=async()=>{try{await loadInbox();toast("Inbox refreshed")}catch(e){toast(e.message)}};
 $("changePassword").onclick=()=>$("passwordModal").classList.remove("hidden");$("cancelPassword").onclick=()=>$("passwordModal").classList.add("hidden");
 $("passwordForm").onsubmit=async e=>{e.preventDefault();const {error}=await db.auth.updateUser({password:$("newPassword").value});if(error)return toast(error.message);$("newPassword").value="";$("passwordModal").classList.add("hidden");toast("Password updated")};
 (async()=>{if(CONFIG.key.startsWith("REPLACE_"))return $("loginError").textContent="Supabase configuration is pending.";const {data}=await db.auth.getSession();if(data.session){signedIn(true);try{await load()}catch(e){toast(e.message)}}})();
