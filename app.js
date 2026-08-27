@@ -43,11 +43,7 @@ async function downloadAndClearInbox(){
   }
   const blob=await zip.generateAsync({type:"blob",compression:"DEFLATE"});
   const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="home-france-inbox-"+new Date().toISOString().slice(0,10)+".zip";document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
-  const noteIds=inbox.filter(x=>x.source!=="telegram").map(x=>x.id),telegramIds=inbox.filter(x=>x.source==="telegram").map(x=>x.id),processed_at=new Date().toISOString();
-  const updates=[];
-  if(noteIds.length)updates.push(db.from("notes").update({status:"done",processed_at}).in("id",noteIds));
-  if(telegramIds.length)updates.push(db.from("telegram_messages").update({status:"done",processed_at}).in("id",telegramIds));
-  const results=await Promise.all(updates);const failed=results.find(x=>x.error);if(failed)throw failed.error;
+  const noteIds=inbox.filter(x=>x.source!=="telegram").map(x=>x.id),telegramIds=inbox.filter(x=>x.source==="telegram").map(x=>x.id);
   const mediaPaths=inbox.filter(x=>x.source==="telegram"&&x.media_path).map(x=>x.media_path);
   if(mediaPaths.length){const {error}=await db.storage.from("telegram-raw").remove(mediaPaths);if(error)throw error;}
   const deletes=[];
