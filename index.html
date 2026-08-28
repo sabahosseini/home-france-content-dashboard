@@ -3,33 +3,19 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><title>Home France Content Dashboard</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-simple">
+  <link rel="stylesheet" href="styles.css?v=20260828-proposal-form">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div id="login" class="overlay"><form id="loginForm" class="card login-card">
-  <img src="home-france-logo.png" alt="Home France"><h1>Content Dashboard</h1>
-  <p>Private team dashboard. Enter the shared password.</p>
-  <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
-  <div id="loginError" class="error"></div><button class="btn">Sign in</button>
-</form></div>
+<div id="login" class="overlay"><form id="loginForm" class="card login-card"><img src="home-france-logo.png" alt="Home France"><h1>Content Dashboard</h1><p>Private team dashboard. Enter the shared password.</p><label>Password<input id="password" type="password" autocomplete="current-password" required></label><div id="loginError" class="error"></div><button class="btn">Sign in</button></form></div>
 <main id="app" class="shell hidden">
-  <header><div><img src="home-france-logo.png" alt="Home France"><small>Content Dashboard</small></div>
-    <div class="actions"><span id="updated"></span><button id="changePassword" class="btn pale">Change password</button><button id="logout" class="btn pale">Log out</button></div>
-  </header>
-  <section class="card"><div class="heading"><h2>Proposal Subjects</h2><b id="proposalCount">0 / 100</b></div>
-    <p class="hint">Social-media video links sent through Telegram appear here automatically. Open the source when you want to review it, then add approved ideas to the calendar.</p><div id="proposals" class="list"></div></section>
-  <section class="card"><div class="heading"><h2>Upcoming Events</h2><b id="eventCount">0 verified</b></div>
-    <p class="hint">Verified opportunities that may become Proposal Subjects.</p><div id="events" class="events"></div></section>
-  <section class="card"><div class="heading"><h2>Approved Calendar</h2><b id="calendarCount">0 scheduled</b></div>
-    <p class="hint">Current and next month remain visible even when empty.</p><div id="calendars"></div></section>
+<header><div><img src="home-france-logo.png" alt="Home France"><small>Content Dashboard</small></div><div class="actions"><span id="updated"></span><button id="changePassword" class="btn pale">Change password</button><button id="logout" class="btn pale">Log out</button></div></header>
+<section class="card"><div class="heading"><h2>Proposal Subjects</h2><div class="actions"><b id="proposalCount">0 / 100</b><button id="addProposal" class="btn">Add Proposal</button></div></div><p class="hint">Social-media video links sent through Telegram appear here automatically. You can also add a quick proposal manually.</p><div id="proposals" class="list"></div></section>
+<section class="card"><div class="heading"><h2>Upcoming Events</h2><b id="eventCount">0 verified</b></div><p class="hint">Verified opportunities that may become Proposal Subjects.</p><div id="events" class="events"></div></section>
+<section class="card"><div class="heading"><h2>Approved Calendar</h2><b id="calendarCount">0 scheduled</b></div><p class="hint">Current and next month remain visible even when empty.</p><div id="calendars"></div></section>
 </main>
-<div id="scheduleModal" class="overlay hidden"><form id="scheduleForm" class="card modal"><h2>Add to Calendar</h2><p id="scheduleSubject"></p>
-  <label>Publication date<input id="scheduleDate" type="date" required></label>
-  <label>Platform<select id="platform"><option>Instagram + YouTube</option><option>Instagram</option><option>YouTube</option><option>TikTok</option><option>Website</option></select></label>
-  <div class="actions"><button id="cancelSchedule" type="button" class="btn pale">Cancel</button><button class="btn">Confirm</button></div></form></div>
-<div id="passwordModal" class="overlay hidden"><form id="passwordForm" class="card modal"><h2>Change shared password</h2>
-  <label>New password<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></label>
-  <div class="actions"><button id="cancelPassword" type="button" class="btn pale">Cancel</button><button class="btn">Update</button></div></form></div>
-<div id="toast" class="toast hidden"></div><script src="app.js?v=20260827-simple"></script>
+<div id="proposalModal" class="overlay hidden"><form id="proposalForm" class="card modal"><h2 id="proposalModalTitle">Add Proposal</h2><label>Title<input id="proposalTitle" type="text" required maxlength="240" placeholder="Proposal title"></label><label>Description (optional)<textarea id="proposalDescription" rows="6" placeholder="Add notes or details now, or leave this empty and edit it later."></textarea></label><div class="actions"><button id="cancelProposal" type="button" class="btn pale">Cancel</button><button class="btn">Save</button></div></form></div>
+<div id="scheduleModal" class="overlay hidden"><form id="scheduleForm" class="card modal"><h2>Add to Calendar</h2><p id="scheduleSubject"></p><label>Publication date<input id="scheduleDate" type="date" required></label><label>Platform<select id="platform"><option>Instagram + YouTube</option><option>Instagram</option><option>YouTube</option><option>TikTok</option><option>Website</option></select></label><div class="actions"><button id="cancelSchedule" type="button" class="btn pale">Cancel</button><button class="btn">Confirm</button></div></form></div>
+<div id="passwordModal" class="overlay hidden"><form id="passwordForm" class="card modal"><h2>Change shared password</h2><label>New password<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></label><div class="actions"><button id="cancelPassword" type="button" class="btn pale">Cancel</button><button class="btn">Update</button></div></form></div>
+<div id="toast" class="toast hidden"></div><script src="app.js?v=20260828-proposal-form"></script>
 </body></html>
