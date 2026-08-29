@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><title>Home France Content Dashboard</title>
-  <link rel="stylesheet" href="styles.css?v=20260828-proposal-form">
+  <link rel="stylesheet" href="styles.css?v=20260829-edit-flags">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -14,8 +14,8 @@
 <section class="card"><div class="heading"><h2>Upcoming Events</h2><b id="eventCount">0 verified</b></div><p class="hint">Verified opportunities that may become Proposal Subjects.</p><div id="events" class="events"></div></section>
 <section class="card"><div class="heading"><h2>Proposal Subjects</h2><div class="actions"><b id="proposalCount">0 / 100</b><button id="addProposal" class="btn">Add Proposal</button></div></div><p class="hint">Social-media video links sent through Telegram appear here automatically. You can also add a quick proposal manually.</p><div id="proposals" class="list"></div></section>
 </main>
-<div id="proposalModal" class="overlay hidden"><form id="proposalForm" class="card modal"><h2 id="proposalModalTitle">Add Proposal</h2><label>Title<input id="proposalTitle" type="text" required maxlength="240" placeholder="Proposal title"></label><label>Description (optional)<textarea id="proposalDescription" rows="6" placeholder="Add notes or details now, or leave this empty and edit it later."></textarea></label><div class="actions"><button id="cancelProposal" type="button" class="btn pale">Cancel</button><button class="btn">Save</button></div></form></div>
+<div id="proposalModal" class="overlay hidden"><form id="proposalForm" class="card modal"><h2 id="proposalModalTitle">Add Proposal</h2><label>Title<input id="proposalTitle" type="text" required maxlength="240" placeholder="Proposal title"></label><label>Description (optional)<textarea id="proposalDescription" rows="6" placeholder="Add notes or details now, or leave this empty and edit it later."></textarea></label><div class="flag-options"><label class="flag-option"><input id="proposalUrgent" type="checkbox"><span><b>Urgent</b><small>Keep this proposal at the top.</small></span></label><label class="flag-option"><input id="proposalAudiencePriority" type="checkbox"><span><b>Audience Priority</b><small>Prioritize this for audience interest.</small></span></label></div><div class="actions"><button id="cancelProposal" type="button" class="btn pale">Cancel</button><button class="btn">Save</button></div></form></div>
 <div id="scheduleModal" class="overlay hidden"><form id="scheduleForm" class="card modal"><h2>Add to Calendar</h2><p id="scheduleSubject"></p><label>Publication date<input id="scheduleDate" type="date" required></label><label>Platform<select id="platform"><option>Instagram + YouTube</option><option>Instagram</option><option>YouTube</option><option>TikTok</option><option>Website</option></select></label><div class="actions"><button id="cancelSchedule" type="button" class="btn pale">Cancel</button><button class="btn">Confirm</button></div></form></div>
 <div id="passwordModal" class="overlay hidden"><form id="passwordForm" class="card modal"><h2>Change shared password</h2><label>New password<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required></label><div class="actions"><button id="cancelPassword" type="button" class="btn pale">Cancel</button><button class="btn">Update</button></div></form></div>
-<div id="toast" class="toast hidden"></div><script src="app.js?v=20260828-proposal-form"></script>
+<div id="toast" class="toast hidden"></div><script src="app.js?v=20260829-edit-flags"></script>
 </body></html>
